@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>L'Intelligence Artificielle — Projet ISZ · Lycée Oukraf Mohamed</title>
+<meta name="description" content="Projet scolaire sur l'intelligence artificielle réalisé par l'équipe ISZ du Lycée Oukraf Mohamed, 1AS.">
+<meta name="theme-color" content="#FAFAFA">
+<script>document.documentElement.classList.add("js");</script>
+<style>
+/* ============================================================
+   1. VARIABLES — Palette noir / blanc / gris + or
+   ============================================================ */
+:root{
+  --bg:#FAFAFA;--bg2:#F2F2F2;--card:#FFFFFF;--card2:#F8F8F8;
+  --ink:#111111;--ink-strong:#000000;--muted:#6B6B6B;
+  --line:#E5E5E5;--line-strong:#D0D0D0;
+  --gold:#C9A961;--gold-soft:rgba(201,169,97,.12);--gold-bright:#E8D4A0;
+  --good:#2E7D5B;--bad:#B03A2E;
+  --shadow:0 2px 20px rgba(0,0,0,.06);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.10);
+  --r:16px;--maxw:1140px;--head:68px;
+}
+html[data-theme="dark"]{
+  --bg:#0A0A0A;--bg2:#0F0F0F;--card:#151515;--card2:#1A1A1A;
+  --ink:#D4D4D4;--ink-strong:#FFFFFF;--muted:#8A8A8A;
+  --line:rgba(255,255,255,.10);--line-strong:rgba(255,255,255,.18);
+  --gold-soft:rgba(201,169,97,.16);
+  --shadow:0 2px 20px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.6);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background-color .3s,color .3s;
+}
+img,canvas{max-width:100%;display:block}
+a{color:var(--gold);text-decoration:none}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+::selection{background:var(--gold);color:#0A0A0A}
+
+/* ============================================================
+   2. HEADER
+   ============================================================ */
+.hd{
+  position:fixed;inset:0 0 auto 0;height:var(--head);z-index:80;
+  display:flex;align-items:center;gap:14px;
+  padding:0 clamp(14px,4vw,32px);
+  background:color-mix(in srgb,var(--bg) 90%,transparent);
+  backdrop-filter:blur(14px) saturate(180%);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{
+  width:38px;height:38px;flex:0 0 auto;border-radius:10px;
+  display:grid;place-items:center;
+  background:linear-gradient(140deg,var(--gold),#A8853F);
+  color:#0A0A0A;font-weight:900;font-size:.82rem;letter-spacing:.5px;
+  box-shadow:0 2px 10px rgba(201,169,97,.35);
+}
+.brand b{display:block;color:var(--ink-strong);font-size:.9rem;line-height:1.2;white-space:nowrap}
+.brand span{display:block;color:var(--muted);font-size:.7rem;line-height:1.2;white-space:nowrap}
+.nav{margin-left:auto;display:flex;align-items:center;gap:2px}
+.nav a{color:var(--ink);font-size:.85rem;font-weight:600;padding:9px 12px;border-radius:9px;white-space:nowrap;transition:.2s}
+.nav a:hover{background:var(--gold-soft);color:var(--ink-strong)}
+.nav a.on{color:var(--gold)}
+.hd-actions{display:flex;align-items:center;gap:6px;margin-left:6px}
+.icon-btn{
+  width:38px;height:38px;border-radius:10px;cursor:pointer;
+  display:grid;place-items:center;
+  background:transparent;border:1px solid var(--line);color:var(--ink);
+  transition:.2s;
+}
+.icon-btn:hover{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
+.icon-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#burger{display:none}
+
+/* ============================================================
+   3. SECTIONS & TYPO
+   ============================================================ */
+section{padding:90px 6vw;scroll-margin-top:var(--head)}
+.wrap{max-width:var(--maxw);margin:0 auto}
+h2{
+  font-size:clamp(1.5rem,3.4vw,2.1rem);line-height:1.25;margin:0 0 8px;
+  color:var(--ink-strong);letter-spacing:-.02em;font-weight:800;
+}
+h2 .ln{display:block;width:46px;height:3px;border-radius:3px;background:var(--gold);margin:0 0 16px}
+h3{font-size:1.05rem;margin:0 0 8px;color:var(--ink-strong);font-weight:700}
+p.mut{color:var(--muted);font-size:.95rem;margin:0 0 32px;max-width:64ch;line-height:1.6}
+p{color:var(--ink)}
+
+/* ============================================================
+   4. CARTES
+   ============================================================ */
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.grid-2{display:grid;gap:24px;grid-template-columns:1fr 1fr;align-items:start}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:24px;display:flex;flex-direction:column;gap:10px;
+  transition:.25s;
+}
+.card:hover{border-color:var(--gold);box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.card h3{font-size:1.05rem;line-height:1.35}
+.card p{font-size:.92rem;line-height:1.55;margin:0;color:var(--muted)}
+.card .tag{
+  align-self:flex-start;margin-top:auto;font-size:.68rem;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--gold);
+  background:var(--gold-soft);border-radius:999px;padding:5px 11px;
+  border:1px solid rgba(201,169,97,.3);
+}
+.card.flat{background:var(--card2)}
+
+/* ============================================================
+   5. IMAGES
+   ============================================================ */
+figure{margin:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--card);aspect-ratio:16/10;position:relative}
+figure img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+figure:hover img{transform:scale(1.05)}
+figure.failed{background:linear-gradient(135deg,var(--card2),var(--bg2));display:grid;place-items:center}
+figure.failed::after{content:"✨";font-size:2.6rem;opacity:.5}
+figure.failed img{display:none}
+figcaption{padding:12px 16px;font-size:.82rem;color:var(--muted);background:var(--card2);border-top:1px solid var(--line);font-style:italic}
+figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
+
+/* ============================================================
+   6. HERO
+   ============================================================ */
+.hero{
+  position:relative;min-height:min(96vh,820px);
+  display:flex;align-items:center;justify-content:center;
+  padding:calc(var(--head) + 50px) 6vw 80px;overflow:hidden;
+  background:
+    radial-gradient(900px 500px at 50% 0%,var(--gold-soft),transparent 65%),
+    radial-gradient(700px 400px at 80% 90%,rgba(201,169,97,.06),transparent 60%),
+    var(--bg);
+  text-align:center;
+}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.hero-in{position:relative;z-index:2;max-width:860px;margin:0 auto;width:100%}
+/* Logo ISZ central */
+.logo-hero{
+  width:110px;height:110px;margin:0 auto 22px;border-radius:50%;
+  display:grid;place-items:center;
+  background:conic-gradient(from 0deg,#C9A961,#E8D4A0,#A8853F,#C9A961);
+  color:#0A0A0A;font-weight:900;font-size:1.7rem;letter-spacing:1px;
+  box-shadow:0 0 60px rgba(201,169,97,.4),0 0 120px rgba(201,169,97,.15);
+  animation:spin 12s linear infinite,glow 3s ease-in-out infinite alternate;
+}
+.logo-hero span{display:block;animation:spin 12s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glow{to{box-shadow:0 0 80px rgba(201,169,97,.6),0 0 160px rgba(201,169,97,.25)}}
+/* Lycée */
+.lycee{
+  display:inline-block;font-size:.85rem;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gold);
+  padding:6px 16px;border:1px solid var(--gold);border-radius:999px;
+  margin-bottom:22px;background:var(--gold-soft);
+}
+.hero h1{
+  font-size:clamp(2rem,5.5vw,3.4rem);line-height:1.08;letter-spacing:-.03em;
+  margin:0 0 14px;color:var(--ink-strong);font-weight:900;
+}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.typed-line{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--muted);margin:0 0 30px;min-height:1.7em;font-weight:500}
+#typed{border-right:2px solid var(--gold);padding-right:4px}
+/* Auteurs */
+.authors{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;max-width:680px;margin:0 auto 30px;text-align:left;
+}
+.author{
+  padding:10px 14px;border:1px solid var(--line);border-radius:11px;
+  background:var(--card);font-size:.82rem;line-height:1.4;
+  display:flex;align-items:center;gap:10px;
+}
+.author .ini{
+  width:28px;height:28px;flex:0 0 auto;border-radius:8px;
+  display:grid;place-items:center;font-weight:800;font-size:.72rem;
+  background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,169,97,.35);
+}
+.author b{display:block;color:var(--ink-strong);font-size:.84rem}
+.author span{color:var(--muted);font-size:.72rem}
+.cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn{
+  position:relative;overflow:hidden;isolation:isolate;
+  display:inline-flex;align-items:center;gap:9px;
+  padding:14px 26px;border-radius:11px;cursor:pointer;
+  font-size:.92rem;font-weight:700;border:1px solid transparent;
+  transition:.22s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--gold);color:#0A0A0A;box-shadow:0 8px 28px rgba(201,169,97,.35)}
+.btn-primary:hover{box-shadow:0 12px 36px rgba(201,169,97,.5)}
+.btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--ink-strong)}
+.btn-ghost:hover{border-color:var(--gold);background:var(--gold-soft);color:var(--gold)}
+.rip{position:absolute;border-radius:50%;transform:scale(0);pointer-events:none;background:rgba(255,255,255,.5);animation:rip .6s ease-out forwards;z-index:-1}
+@keyframes rip{to{transform:scale(3.2);opacity:0}}
+
+/* ============================================================
+   7. BILAN (Hier / Aujourd'hui / Demain)
+   ============================================================ */
+.journey{display:grid;gap:20px;grid-template-columns:repeat(3,1fr);margin-top:30px;position:relative}
+.journey::before{
+  content:"";position:absolute;top:44px;left:16%;right:16%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.journey .card{position:relative;z-index:1;text-align:center;align-items:center}
+.journey .year{
+  width:88px;height:88px;border-radius:50%;display:grid;place-items:center;
+  background:var(--card);border:2px solid var(--gold);color:var(--gold);
+  font-weight:900;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;
+  margin:0 auto 16px;box-shadow:0 0 30px rgba(201,169,97,.25);
+}
+.journey h3{font-size:1.15rem}
+.journey p{text-align:center}
+
+/* ============================================================
+   8. DEUX FORMES (utile / nuisible)
+   ============================================================ */
+.forms{display:grid;gap:24px;grid-template-columns:1fr 1fr;margin-top:30px}
+.form-col{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:28px;overflow:hidden;
+}
+.form-col.good-col{border-top:4px solid var(--good)}
+.form-col.bad-col{border-top:4px solid var(--bad)}
+.form-col h3{font-size:1.3rem;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.form-col h3 .ico{font-size:1.4rem}
+.form-col > p.mut{margin-bottom:20px}
+.ex{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.ex li{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:12px 14px;background:var(--card2);border-radius:11px;
+  border:1px solid var(--line);font-size:.9rem;line-height:1.5;
+}
+.ex li b{color:var(--ink-strong);display:block;margin-bottom:2px;font-size:.92rem}
+.ex li span{color:var(--muted)}
+.ex li .emoji{font-size:1.3rem;flex:0 0 auto;line-height:1}
+.synth{
+  margin-top:30px;padding:22px 26px;border-radius:var(--r);
+  background:linear-gradient(135deg,var(--gold-soft),transparent);
+  border:1px solid var(--gold);text-align:center;
+  font-size:1.02rem;font-weight:600;color:var(--ink-strong);
+  font-style:italic;
+}
+.synth::before{content:"« ";color:var(--gold);font-size:1.4rem}
+.synth::after{content:" »";color:var(--gold);font-size:1.4rem}
+
+/* ============================================================
+   9. RÉALITÉ ACTUELLE
+   ============================================================ */
+.reality{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.real-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  overflow:hidden;display:flex;flex-direction:column;transition:.25s;
+}
+.real-card:hover{border-color:var(--gold);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.real-card figure{border:0;border-radius:0;aspect-ratio:16/10}
+.real-card .body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.real-card h3{font-size:1rem;line-height:1.35;margin:0}
+.real-card p{font-size:.88rem;line-height:1.55;color:var(--muted);margin:0}
+.real-card .question{
+  margin-top:auto;padding:10px 14px;border-radius:9px;
+  background:var(--gold-soft);border-left:3px solid var(--gold);
+  font-size:.82rem;font-style:italic;color:var(--ink);
+}
+
+/* ============================================================
+   10. ISZ AI CHAT
+   ============================================================ */
+.ai{display:grid;gap:22px;grid-template-columns:1.6fr 1fr;align-items:start;margin-top:30px}
+.chat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden;min-height:520px}
+.chat-hd{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.chat-hd .dot{width:9px;height:9px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px rgba(46,125,91,.18)}
+.chat-hd b{font-size:.94rem;color:var(--ink-strong)}
+.chat-hd small{color:var(--muted);font-size:.74rem;margin-left:auto}
+.quick{display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--card2)}
+.quick button{
+  font-size:.78rem;font-weight:600;padding:8px 12px;border-radius:999px;cursor:pointer;
+  background:transparent;border:1px solid var(--line);color:var(--ink);transition:.2s;
+}
+.quick button:hover{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
+.log{flex:1;overflow:auto;padding:20px 18px;display:flex;flex-direction:column;gap:12px;max-height:430px;scroll-behavior:smooth}
+.msg{max-width:86%;padding:12px 15px;border-radius:14px;font-size:.9rem;line-height:1.55;white-space:pre-wrap;word-wrap:break-word}
+.msg.bot{align-self:flex-start;background:var(--card2);border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:4px}
+.msg.me{align-self:flex-end;background:var(--gold);color:#0A0A0A;border-bottom-right-radius:4px;font-weight:500}
+.msg .meta{display:block;margin-top:7px;font-size:.7rem;opacity:.65;font-style:italic}
+.typing::after{content:"…";animation:dotpulse 1.1s infinite}
+@keyframes dotpulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sugg{display:flex;gap:8px;flex-wrap:wrap;padding:0 18px 14px}
+.sugg button{
+  font-size:.76rem;padding:7px 12px;border-radius:999px;cursor:pointer;
+  background:var(--gold-soft);border:1px solid transparent;color:var(--gold);font-weight:600;
+}
+.sugg button:hover{border-color:var(--gold)}
+.chat-in{display:flex;gap:8px;padding:14px 16px;border-top:1px solid var(--line);background:var(--card2)}
+.chat-in input{
+  flex:1;padding:12px 15px;border-radius:11px;font-size:.9rem;font-family:inherit;
+  background:var(--card);border:1px solid var(--line);color:var(--ink-strong);min-width:0;
+}
+.chat-in input::placeholder{color:var(--muted)}
+.chat-in button.send{
+  width:46px;height:46px;flex:0 0 auto;border-radius:11px;border:0;cursor:pointer;
+  background:var(--gold);color:#0A0A0A;display:grid;place-items:center;transition:.2s;
+}
+.chat-in button.send:hover{box-shadow:0 6px 20px rgba(201,169,97,.45)}
+.chat-in button.send svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ai-side{display:grid;gap:14px}
+
+/* ============================================================
+   11. ÉQUIPE
+   ============================================================ */
+.member{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.avatar{
+  width:48px;height:48px;border-radius:12px;flex:0 0 auto;
+  display:grid;place-items:center;font-weight:900;font-size:.9rem;
+  background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,169,97,.35);
+}
+
+/* ============================================================
+   12. FOOTER
+   ============================================================ */
+footer{background:var(--bg2);border-top:1px solid var(--line);padding:60px 6vw 40px}
+.f-grid{display:grid;gap:32px;grid-template-columns:1.5fr 1fr 1fr;max-width:var(--maxw);margin:0 auto}
+footer h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin:0 0 14px;font-weight:800}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+footer ul li{color:var(--ink);font-size:.88rem}
+footer ul a{color:var(--ink);font-size:.88rem}
+footer ul a:hover{color:var(--gold)}
+.f-bottom{
+  max-width:var(--maxw);margin:40px auto 0;padding-top:24px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;
+  font-size:.8rem;color:var(--muted);
+}
+
+/* ============================================================
+   13. TOP BUTTON
+   ============================================================ */
+#top{
+  position:fixed;right:20px;bottom:24px;z-index:84;width:46px;height:46px;
+  border-radius:12px;display:grid;place-items:center;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);color:var(--ink);
+  opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow);
+}
+#top.show{opacity:1;pointer-events:auto}
+#top:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
+#top svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ============================================================
+   14. ANIMATIONS (fade simple)
+   ============================================================ */
+.rv{transition:opacity .7s ease,transform .7s ease}
+.js .rv{opacity:0;transform:translateY(24px)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv,.js .rv{opacity:1;transform:none;transition:none}.logo-hero{animation:none}}
+
+/* ============================================================
+   15. RESPONSIVE
+   ============================================================ */
+@media (max-width:1000px){
+  .ai{grid-template-columns:1fr}
+  .f-grid{grid-template-columns:1fr 1fr}
+  .grid-2,.forms{grid-template-columns:1fr}
+  .journey{grid-template-columns:1fr}
+  .journey::before{display:none}
+}
+@media (max-width:860px){
+  :root{--head:60px}
+  .nav{display:none}#burger{display:grid}.brand span{display:none}
+  section{padding:64px 6vw}
+  .hero{padding-top:calc(var(--head) + 30px);min-height:auto}
+  .nav.open{
+    display:flex;flex-direction:column;align-items:stretch;gap:2px;
+    position:fixed;top:var(--head);left:0;right:0;z-index:78;
+    background:var(--bg2);border-bottom:1px solid var(--line);
+    padding:12px 16px 18px;max-height:calc(100vh - var(--head));overflow:auto;
+  }
+  .nav.open a{padding:14px 12px;font-size:.95rem;border-radius:10px}
+  .nav.open a+a{border-top:1px solid var(--line)}
+  .grid{grid-template-columns:1fr}
+  p.mut{white-space:normal}
+  .authors{grid-template-columns:1fr 1fr;max-width:100%}
+}
+@media (max-width:560px){
+  .f-grid{grid-template-columns:1fr}
+  .cta .btn{flex:1 1 100%;justify-content:center}
+  .msg{max-width:94%}
+  .authors{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="hd">
+  <a class="brand" href="#accueil" aria-label="Accueil — Projet ISZ">
+    <span class="logo" aria-hidden="true">ISZ</span>
+    <span>
+      <b>Projet ISZ</b>
+      <span>Lycée Oukraf Mohamed · 1AS</span>
+    </span>
+  </a>
+
+  <nav class="nav" id="nav" aria-label="Navigation principale">
+    <a href="#accueil" class="on">Accueil</a>
+    <a href="#definition">Définition</a>
+    <a href="#formes">Deux formes</a>
+    <a href="#realite">Réalité</a>
+    <a href="#bilan">Bilan</a>
+    <a href="#iszai">ISZ AI</a>
+    <a href="#equipe">Équipe</a>
+  </nav>
+
+  <div class="hd-actions">
+    <button class="icon-btn" id="tBtn" aria-label="Changer de thème clair / sombre">
+      <svg viewBox="0 0 24 24" id="tIcon"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <button class="icon-btn" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" id="accueil">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <!-- Logo ISZ central -->
+    <div class="logo-hero" role="img" aria-label="Logo de l'équipe ISZ"><span>ISZ</span></div>
+
+    <!-- Lycée -->
+    <div class="lycee">Lycée Oukraf Mohamed</div>
+
+    <h1>L'Intelligence <em>Artificielle</em></h1>
+    <p class="typed-line"><span id="typed"></span></p>
+
+    <!-- Auteurs -->
+    <div class="authors" role="list" aria-label="Participants du projet">
+      <div class="author" role="listitem">
+        <span class="ini" aria-hidden="true">GM</span>
+        <div><b>Gharbi Mohamed</b><span>Créateur et porteur du projet</span></div>
+      </div>
+      <div class="author" role="listitem">
+        <span class="ini" aria-hidden="true">GD</span>
+        <div><b>Guenidi Djamal</b><span>Assistant dans les idées</span></div>
+      </div>
+      <div class="author" role="listitem">
+        <span class="ini" aria-hidden="true">SR</span>
+        <div><b>Sid Rayan</b><span>Lecteur / relecteur</span></div>
+      </div>
+      <div class="author" role="listitem">
+        <span class="ini" aria-hidden="true">MS</span>
+        <div><b>Mustapha Sebaa</b><span>Assistant dans l'explication</span></div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <a class="btn btn-primary" href="#definition">
+        Découvrir le projet
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#iszai">Interroger ISZ AI</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DÉFINITION
+     ============================================================ -->
+<section id="definition">
+  <div class="wrap">
+    <h2 class="rv"><span class="ln"></span>Qu'est-ce que l'intelligence artificielle ?</h2>
+    <p class="mut rv">Une définition simple, puis les raisons pour lesquelles c'est un projet si difficile, et enfin comment l'idée est née.</p>
+
+    <div class="grid-2 rv" style="margin-bottom:36px">
+      <div class="card">
+        <h3>Une définition simple</h3>
+        <p>L'intelligence artificielle regroupe les techniques qui permettent à une machine d'accomplir des tâches habituellement réservées à l'humain : comprendre une langue, reconnaître une image, prendre une décision.</p>
+        <p style="margin-top:8px">Elle ne pense pas comme nous : elle calcule à partir d'exemples.</p>
+        <span class="tag">Notion clé</span>
+      </div>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=900&q=70" alt="Cerveau numérique composé de points lumineux, symbole de l'intelligence artificielle" loading="lazy">
+        <figcaption>Le cerveau numérique : une image pour représenter l'IA.</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="rv" style="font-size:1.2rem;margin-top:40px">Pourquoi est-ce l'un des projets les plus difficiles des développeurs ?</h3>
+    <p class="mut rv">Trois raisons principales expliquent cette difficulté.</p>
+    <div class="grid rv">
+      <article class="card">
+        <h3>1. Des algorithmes complexes</h3>
+        <p>Il faut écrire des programmes capables d'apprendre, pas seulement d'exécuter des ordres. C'est une toute autre logique.</p>
+        <span class="tag">Complexité</span>
+      </article>
+      <article class="card">
+        <h3>2. Des données en très grande quantité</h3>
+        <p>Pour apprendre, un modèle a besoin de millions d'exemples : images, textes, sons. Les collecter et les vérifier prend des années.</p>
+        <span class="tag">Données</span>
+      </article>
+      <article class="card">
+        <h3>3. Une puissance de calcul énorme</h3>
+        <p>Entraîner un modèle demande des milliers d'ordinateurs puissants fonctionnant pendant des jours, et beaucoup d'énergie.</p>
+        <span class="tag">Calcul</span>
+      </article>
+    </div>
+
+    <h3 class="rv" style="font-size:1.2rem;margin-top:50px">Comment l'idée est-elle née ?</h3>
+    <p class="mut rv">L'idée d'une machine pensante n'est pas nouvelle : elle a plus de 70 ans.</p>
+    <div class="grid-2 rv">
+      <div class="card">
+        <p><b style="color:var(--gold)">1950 — Alan Turing</b> imagine un test : si un juge ne peut pas distinguer une machine d'un humain lors d'une conversation écrite, on peut la considérer comme « intelligente ».</p>
+        <p style="margin-top:10px"><b style="color:var(--gold)">1956 — Conférence de Dartmouth</b> : un groupe de chercheurs officialise l'expression « intelligence artificielle » et se lance dans ce défi.</p>
+        <p style="margin-top:10px">Depuis, les développeurs n'ont cessé d'améliorer leurs méthodes : des règles écrites à la main, puis des réseaux de neurones qui apprennent seuls à partir d'exemples.</p>
+      </div>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=70" alt="Circuit imprimé, illustration des débuts de l'informatique et de l'IA" loading="lazy">
+        <figcaption>Des premiers circuits aux réseaux de neurones modernes.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DEUX FORMES
+     ============================================================ -->
+<section id="formes">
+  <div class="wrap">
+    <h2 class="rv"><span class="ln"></span>Les deux formes de l'IA</h2>
+    <p class="mut rv">La même technologie peut être utile ou nuisible : tout dépend de l'usage qu'on en fait.</p>
+
+    <div class="forms rv">
+      <!-- UTILE -->
+      <div class="form-col good-col">
+        <h3><span class="ico" aria-hidden="true">✅</span> L'IA utile</h3>
+        <p class="mut">Quatre exemples concrets où l'IA aide vraiment les humains.</p>
+        <ul class="ex">
+          <li><span class="emoji" aria-hidden="true">🏥</span><div><b>Médecine</b><span>Aide à détecter des anomalies sur les radios et les scanners, sans remplacer le médecin.</span></div></li>
+          <li><span class="emoji" aria-hidden="true">🎓</span><div><b>Éducation</b><span>Exercices adaptés au niveau de chaque élève et retours immédiats.</span></div></li>
+          <li><span class="emoji" aria-hidden="true">🚗</span><div><b>Transport</b><span>Systèmes d'aide à la conduite : freinage d'urgence, maintien de voie.</span></div></li>
+          <li><span class="emoji" aria-hidden="true">🌱</span><div><b>Environnement</b><span>Optimisation de la consommation d'énergie et des réseaux électriques.</span></div></li>
+        </ul>
+      </div>
+
+      <!-- NUISIBLE -->
+      <div class="form-col bad-col">
+        <h3><span class="ico" aria-hidden="true">⚠️</span> L'IA nuisible</h3>
+        <p class="mut">Quatre exemples concrets où l'IA cause de vrais problèmes.</p>
+        <ul class="ex">
+          <li><span class="emoji" aria-hidden="true">🎭</span><div><b>Deepfakes</b><span>Vidéos et voix truquées qui font dire à une personne ce qu'elle n'a jamais dit.</span></div></li>
+          <li><span class="emoji" aria-hidden="true">📰</span><div><b>Fausses informations</b><span>Génération massive de faux articles et de fausses images virales.</span></div></li>
+          <li><span class="emoji" aria-hidden="true">🔒</span><div><b>Atteinte à la vie privée</b><span>Reconnaissance faciale et collecte de données sans consentement.</span></div></li>
+          <li><span class="emoji" aria-hidden="true">📝</span><div><b>Triche scolaire</b><span>Devoirs et exposés entièrement rédigés par l'IA, sans aucun effort personnel.</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="synth rv">La même technologie peut être utile ou dangereuse : tout dépend de l'usage.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     RÉALITÉ ACTUELLE
+     ============================================================ -->
+<section id="realite">
+  <div class="wrap">
+    <h2 class="rv"><span class="ln"></span>La réalité aujourd'hui</h2>
+    <p class="mut rv">Quatre exemples vivants et précis, avec une question pour réfléchir.</p>
+
+    <div class="reality rv">
+      <article class="real-card">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=70" alt="Élèves en classe avec un ordinateur" loading="lazy">
+        </figure>
+        <div class="body">
+          <h3>Aujourd'hui, des élèves font leurs devoirs avec l'IA</h3>
+          <p>Beaucoup d'élèves utilisent un assistant pour rédiger leurs exercices entièrement, au lieu de réfléchir eux-mêmes.</p>
+          <p class="question">Est-ce un bon usage ? Apprendre, c'est d'abord essayer.</p>
+        </div>
+      </article>
+
+      <article class="real-card">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=70" alt="Médecin analysant une image médicale" loading="lazy">
+        </figure>
+        <div class="body">
+          <h3>Dans les hôpitaux, l'IA aide au diagnostic</h3>
+          <p>Des hôpitaux utilisent l'IA pour repérer des anomalies sur les radios et les scanners, plus vite qu'à l'œil nu.</p>
+          <p class="question">Le médecin reste décideur : l'IA aide, ne remplace pas.</p>
+        </div>
+      </article>
+
+      <article class="real-card">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=70" alt="Smartphone avec réseaux sociaux, illustration des recommandations" loading="lazy">
+        </figure>
+        <div class="body">
+          <h3>Les réseaux sociaux choisissent ce que tu vois</h3>
+          <p>Chaque vidéo ou publication que tu regardes est sélectionnée par un algorithme qui prédit ce qui va te plaire.</p>
+          <p class="question">Est-ce vraiment toi qui choisis, ou l'algorithme ?</p>
+        </div>
+      </article>
+
+      <article class="real-card">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=70" alt="Documents et CV, illustration du recrutement assisté par IA" loading="lazy">
+        </figure>
+        <div class="body">
+          <h3>Des entreprises filtrent les CV avec l'IA</h3>
+          <p>Avant même l'entretien, un algorithme décide quels CV sont retenus et lesquels sont écartés.</p>
+          <p class="question">Si l'IA se trompe, comment le savoir ?</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BILAN : HIER / AUJOURD'HUI / DEMAIN
+     ============================================================ -->
+<section id="bilan">
+  <div class="wrap">
+    <h2 class="rv"><span class="ln"></span>Bilan du projet : hier, aujourd'hui, demain</h2>
+    <p class="mut rv">Un regard rapide sur le chemin parcouru depuis 70 ans.</p>
+
+    <div class="journey rv">
+      <div class="card">
+        <div class="year">Hier</div>
+        <h3>Le rêve des pionniers</h3>
+        <p>Dans les années 1950, Turing et les chercheurs de Dartmouth imaginent une machine capable de penser. L'idée semble alors impossible.</p>
+      </div>
+      <div class="card">
+        <div class="year">Aujourd'hui</div>
+        <h3>Une présence quotidienne</h3>
+        <p>L'IA générative rédige du texte, crée des images, recommande des vidéos. Elle est dans nos téléphones, nos hôpitaux, nos écoles.</p>
+      </div>
+      <div class="card">
+        <div class="year">Demain</div>
+        <h3>Des questions ouvertes</h3>
+        <p>Viendra-t-on à une IA consciente ? Comment la réguler ? Quel sera son impact sur l'emploi ? Ces questions restent sans réponse.</p>
+      </div>
+    </div>
+
+    <p class="synth rv">L'IA n'est ni bonne ni mauvaise : tout dépend de l'usage qu'on en fait.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     ISZ AI
+     ============================================================ -->
+<section id="iszai">
+  <div class="wrap">
+    <h2 class="rv"><span class="ln"></span>ISZ AI — notre assistant</h2>
+    <p class="mut rv">Un assistant local qui répond à vos questions à partir du contenu du projet, sans connexion.</p>
+
+    <div class="card flat rv" style="margin-bottom:22px;border-left:4px solid var(--gold)">
+      <p style="margin:0;font-size:.95rem;line-height:1.6">
+        <b style="color:var(--gold)">Après tout ce que vous avez découvert</b>, voici des exemples concrets et vivants de l'intelligence artificielle. Grâce à ce système, vous pouvez poser vos questions et demander des explications sur tout ce que vous n'avez pas compris dans ce projet.
+      </p>
+      <p style="margin:6px 0 0;font-weight:700;color:var(--ink-strong)">Maintenant, posez vos questions !</p>
+    </div>
+
+    <div class="ai rv">
+      <div class="chat">
+        <div class="chat-hd">
+          <span class="dot" aria-hidden="true"></span>
+          <b>ISZ AI</b>
+          <small>hors ligne · v1.0</small>
+        </div>
+        <div class="quick" role="group" aria-label="Questions rapides">
+          <button type="button" data-q="C'est quoi l'IA ?">C'est quoi l'IA ?</button>
+          <button type="button" data-q="Qui est Turing ?">Qui est Turing ?</button>
+          <button type="button" data-q="Donne un exemple d'IA utile">Exemple d'IA utile</button>
+        </div>
+        <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation"></div>
+        <div class="sugg" id="sugg"></div>
+        <form class="chat-in" id="chatForm" autocomplete="off">
+          <input type="text" id="chatInput" placeholder="Posez votre question…" aria-label="Votre question">
+          <button class="send" type="submit" aria-label="Envoyer">
+            <svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg>
+          </button>
+        </form>
+      </div>
+      <aside class="ai-side">
+        <div class="card">
+          <h3>Comment ça marche</h3>
+          <p>ISZ AI compare votre question à une base de fiches locales et renvoie la plus proche. Aucune donnée ne quitte l'appareil.</p>
+        </div>
+        <div class="card flat">
+          <h3>Bon à savoir</h3>
+          <p>L'assistant peut se tromper : vérifiez toujours une réponse importante dans le cours ci-dessus.</p>
+        </div>
+        <div class="card flat">
+          <h3>Effacer la conversation</h3>
+          <p>L'historique est conservé sur cet appareil uniquement.</p>
+          <button class="btn btn-ghost" type="button" id="clearChat" style="margin-top:8px;align-self:flex-start;padding:9px 16px;font-size:.82rem">Vider l'historique</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ÉQUIPE (rappel en bas)
+     ============================================================ -->
+<section id="equipe">
+  <div class="wrap">
+    <h2 class="rv"><span class="ln"></span>Notre équipe</h2>
+    <p class="mut rv">Projet réalisé par les élèves de 1AS du Lycée Oukraf Mohamed, sous le label ISZ.</p>
+
+    <div class="grid rv">
+      <article class="card">
+        <div class="member"><span class="avatar" aria-hidden="true">GM</span><h3 style="margin:0">Gharbi Mohamed</h3></div>
+        <p><b style="color:var(--gold)">Créateur et porteur du projet</b></p>
+        <p>Conception, code du site et coordination du projet.</p>
+      </article>
+      <article class="card">
+        <div class="member"><span class="avatar" aria-hidden="true">GD</span><h3 style="margin:0">Guenidi Djamal</h3></div>
+        <p><b style="color:var(--gold)">Assistant dans les idées</b></p>
+        <p>Choix des contenus, exemples et fonctionnalités du site.</p>
+      </article>
+      <article class="card">
+        <div class="member"><span class="avatar" aria-hidden="true">SR</span><h3 style="margin:0">Sid Rayan</h3></div>
+        <p><b style="color:var(--gold)">Lecteur / relecteur</b></p>
+        <p>Correction, clarté et exactitude des textes.</p>
+      </article>
+      <article class="card">
+        <div class="member"><span class="avatar" aria-hidden="true">MS</span><h3 style="margin:0">Mustapha Sebaa</h3></div>
+        <p><b style="color:var(--gold)">Assistant dans l'explication</b></p>
+        <p>Préparation de la présentation orale et vulgarisation.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="f-grid">
+    <div>
+      <div class="brand" style="margin-bottom:14px">
+        <span class="logo" aria-hidden="true">ISZ</span>
+        <span><b>Lycée Oukraf Mohamed</b><span>Projet ISZ — Intelligence Artificielle</span></span>
+      </div>
+      <p style="font-size:.88rem;color:var(--muted);margin:0;max-width:40ch">Projet scolaire réalisé par quatre élèves de 1AS, sous la supervision de leur enseignante.</p>
+    </div>
+    <div>
+      <h4>Participants</h4>
+      <ul>
+        <li>Gharbi Mohamed — Créateur</li>
+        <li>Guenidi Djamal — Idées</li>
+        <li>Sid Rayan — Relecture</li>
+        <li>Mustapha Sebaa — Explication</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Sections</h4>
+      <ul>
+        <li><a href="#definition">Définition</a></li>
+        <li><a href="#formes">Deux formes</a></li>
+        <li><a href="#realite">Réalité</a></li>
+        <li><a href="#iszai">ISZ AI</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-bottom">
+    <span>© <span id="year">2026</span> Lycée Oukraf Mohamed — Projet ISZ</span>
+    <span>Designed &amp; Built by ISZ</span>
+  </div>
+</footer>
+
+<button id="top" aria-label="Retour en haut">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+<script>
+/* ============================================================
+   BASE DE CONNAISSANCES — ISZ AI
+   80+ fiches, toutes liées au projet ou au thème de l'IA.
+   Chaque fiche : k = mots-clés (FR + AR), r = réponse.
+   ============================================================ */
+const KB = [
+
+/* ---------- L'IA : notions de base ---------- */
+{k:["ia","intelligence artificielle","c est quoi l ia","definition","definir","تعريف"], r:"L'intelligence artificielle regroupe les techniques qui permettent à une machine d'accomplir des tâches habituellement réservées à l'humain : comprendre une langue, reconnaître une image, prendre une décision.\n\nÀ retenir : l'IA ne pense pas comme nous, elle calcule à partir d'exemples."},
+
+{k:["algorithme","algo","خوارزمية"], r:"Un algorithme est une suite finie d'instructions qui transforme des données d'entrée en résultat.\n\nTout programme, même très simple, est un algorithme. Ce mot ne contient aucune notion d'« intelligence »."},
+
+{k:["donnee","donnees","big data","corpus","بيانات"], r:"Les données sont la matière première de l'IA.\n\nPlus elles sont nombreuses, variées et de qualité, meilleur est l'apprentissage. Des données biaisées donnent un modèle biaisé."},
+
+{k:["machine learning","apprentissage automatique","ml","تعلم الالة"], r:"Le machine learning est l'approche où la machine apprend à partir d'exemples au lieu de suivre des règles écrites à la main.\n\nTrois familles : supervisé (exemples étiquetés), non supervisé (recherche de regroupements), renforcement (récompense ou pénalité)."},
+
+{k:["deep learning","apprentissage profond","profond","تعلم عميق"], r:"Le deep learning est un machine learning qui utilise des réseaux de neurones à nombreuses couches.\n\nChaque couche extrait des caractéristiques de plus en plus abstraites : contours, formes, puis objets entiers pour une image."},
+
+{k:["reseau de neurones","neurone","neurones","perceptron","شبكة عصبية"], r:"Un réseau de neurones artificiel est un assemblage d'unités de calcul reliées entre elles.\n\nChaque connexion a un poids ajusté pendant l'entraînement. Le réseau ne « pense » pas : il minimise une erreur sur des exemples."},
+
+{k:["supervise","supervisee","etiquete"], r:"L'apprentissage supervisé fournit au modèle des exemples déjà étiquetés.\n\nLe modèle apprend à associer une entrée (une image) à une sortie attendue (l'étiquette « chat »). C'est la méthode la plus courante pour classer et prédire."},
+
+{k:["non supervise","non supervisee","clustering","regroupement"], r:"L'apprentissage non supervisé ne reçoit aucune étiquette.\n\nLe modèle cherche seul des structures : regrouper des clients aux habitudes similaires, par exemple."},
+
+{k:["renforcement","recompense","agent","تعزيز"], r:"L'apprentissage par renforcement fonctionne par essais et erreurs.\n\nUn agent agit, reçoit une récompense ou une pénalité, puis ajuste sa stratégie. C'est la méthode d'AlphaGo et de nombreux robots."},
+
+{k:["ia faible","ia forte","faible","forte","ذكاء ضعيف","ذكاء قوي"], r:"L'IA faible est spécialisée dans une tâche : traduction, reconnaissance d'images, jeu d'échecs. C'est le seul type réellement disponible.\n\nL'IA forte, polyvalente et consciente, reste une hypothèse."},
+
+{k:["entrainement","entrainer","parametre","poids"], r:"L'entraînement est la phase où le modèle ajuste ses paramètres internes pour réduire ses erreurs sur les exemples fournis.\n\nPlus il voit de données, plus il s'améliore — mais un modèle trop spécialisé finit par « surapprendre »."},
+
+/* ---------- Histoire ---------- */
+{k:["turing","alan turing","test de turing","تورينغ","تورينج"], r:"Alan Turing (1912-1954) est un mathématicien britannique, pionnier de l'informatique.\n\nEn 1950, il propose un test : si un juge ne peut distinguer une machine d'un humain lors d'un dialogue écrit, on peut la considérer comme « intelligente »."},
+
+{k:["dartmouth","1956","naissance du terme","conference de dartmouth"], r:"La conférence de Dartmouth, à l'été 1956, officialise l'expression « intelligence artificielle ».\n\nJohn McCarthy et Marvin Minsky y réunissent des chercheurs convaincus qu'un programme peut simuler l'intelligence."},
+
+{k:["eliza","1966","chatbot ancien"], r:"ELIZA, créé en 1966, est l'un des premiers programmes de dialogue.\n\nIl imite un psychothérapeute en reformulant les phrases de l'utilisateur. Son succès a montré que l'humain projette facilement de l'intelligence sur une machine."},
+
+{k:["deep blue","kasparov","echecs","1997","شطرنج"], r:"Deep Blue est le superordinateur d'IBM qui bat Garry Kasparov aux échecs en 1997.\n\nIl combine une exploration massive de coups et une fonction d'évaluation écrite par des experts."},
+
+{k:["alexnet","2012","imagenet"], r:"AlexNet, en 2012, fait chuter le taux d'erreur en reconnaissance d'images grâce au deep learning.\n\nCette victoire marque le début de l'essor moderne des réseaux de neurones profonds."},
+
+{k:["alphago","go","2016","sedol"], r:"AlphaGo, développé par DeepMind, bat Lee Sedol au jeu de go en 2016.\n\nIl associe réseaux de neurones et exploration arborescente, ce qui dépasse les méthodes par force brute."},
+
+{k:["2022","ia generative","chatgpt","grand public"], r:"À partir de 2022, les grands modèles de langage rendent l'IA générative accessible au grand public.\n\nDes outils comme ChatGPT rédigent du texte, résument un document ou répondent à des questions en langage naturel."},
+
+/* ---------- Deux formes : UTILE ---------- */
+{k:["ia utile","utile","bienfait","avantage","نافع"], r:"L'IA est utile quand elle aide l'humain sans le remplacer.\n\nExemples : aide au diagnostic médical, exercices adaptés en classe, freinage d'urgence en voiture, optimisation de l'énergie."},
+
+{k:["medecine","sante","diagnostic","hopital","طب","صحة"], r:"En médecine, l'IA aide à détecter des anomalies sur les radios et les scanners, souvent plus vite qu'à l'œil nu.\n\nMais le diagnostic final et la décision restent confiés au médecin. L'IA est un outil d'aide."},
+
+{k:["education","ecole","apprendre","classe","تعليم"], r:"En éducation, l'IA propose des exercices adaptés au niveau de chaque élève et des retours immédiats.\n\nElle ne remplace pas l'enseignant : elle libère du temps pour l'accompagnement."},
+
+{k:["transport","voiture","conduite","securite","نقل"], r:"Dans le transport, l'IA assiste la conduite : maintien de voie, freinage d'urgence, régulation de vitesse.\n\nLa conduite entièrement autonome reste très encadrée."},
+
+{k:["environnement","ecologie","energie","climat"], r:"L'IA peut optimiser la consommation d'énergie et les réseaux électriques.\n\nElle aide aussi à prévoir la météo ou à modéliser le climat — mais son propre coût énergétique reste élevé."},
+
+/* ---------- Deux formes : NUISIBLE ---------- */
+{k:["ia nuisible","nuisible","danger","risque","ضار"], r:"L'IA devient nuisible quand elle est utilisée sans contrôle ni responsabilité.\n\nExemples : deepfakes, fausses informations massives, atteinte à la vie privée, triche scolaire."},
+
+{k:["deepfake","fausse video","truquage","تزييف"], r:"Un deepfake est une image, une vidéo ou une voix truquée par IA.\n\nElle fait dire à une personne ce qu'elle n'a jamais dit. La vérification de la source reste la meilleure protection."},
+
+{k:["fausse information","fake news","desinformation","اخبار مزيفة"], r:"L'IA peut générer massivement de faux articles, de fausses images et de fausses vidéos.\n\nCes contenus se propagent vite et trompent facilement. Recouper l'information avec plusieurs sources fiables est essentiel."},
+
+{k:["vie privee","donnees personnelles","reconnaissance faciale","خصوصية"], r:"La reconnaissance faciale et la collecte de données sans consentement menacent la vie privée.\n\nLe RGPD encadre ces usages en Europe : base légale, droit d'accès, droit de suppression."},
+
+{k:["triche","triche scolaire","devoir ia"], r:"Utiliser l'IA pour rédiger entièrement un devoir, sans réfléchir, est une forme de triche.\n\nL'IA peut aider à comprendre, à reformuler une idée, mais pas à faire le travail à la place de l'élève."},
+
+{k:["emploi","travail","metier","automatisation","وظائف"], r:"L'IA automatise des tâches, rarement des métiers entiers.\n\nLes postes les plus exposés combinent des tâches répétitives et des données numériques. Les compétences de contrôle et de relation humaine prennent de la valeur."},
+
+{k:["energie","empreinte","carbone","ecologie ia"], r:"L'entraînement des grands modèles consomme beaucoup d'électricité et d'eau.\n\nÀ l'inverse, l'IA peut optimiser des réseaux. Le bilan dépend fortement de l'usage."},
+
+/* ---------- Réalité actuelle ---------- */
+{k:["realite","aujourd hui","exemple reel","واقع"], r:"Aujourd'hui, l'IA est déjà partout : recommandations sur YouTube et TikTok, aide au diagnostic dans les hôpitaux, filtrage de CV en entreprise, correction automatique dans les téléphones.\n\nElle est utile ou problématique selon l'usage qu'on en fait."},
+
+{k:["reseaux sociaux","youtube","tiktok","recommandation"], r:"Les réseaux sociaux utilisent l'IA pour choisir les contenus que tu vois.\n\nChaque vidéo regardée est une donnée de plus. L'algorithme prédit ce qui va te retenir le plus longtemps — pas forcément ce qui est vrai ou utile."},
+
+{k:["cv","recrutement","entreprise","filtrage"], r:"Certaines entreprises utilisent l'IA pour filtrer les CV avant même l'entretien.\n\nSi les données d'entraînement sont biaisées, l'IA peut écarter des candidats injustement."},
+
+{k:["telephone","smartphone","photo"], r:"Ton téléphone utilise l'IA sans arrêt : amélioration des photos, correction du texte, reconnaissance vocale, traduction instantanée.\n\nElle est invisible mais bien réelle."},
+
+/* ---------- Bilan : hier / aujourd'hui / demain ---------- */
+{k:["hier","pionniers","debuts","بداية"], r:"Hier, dans les années 1950, Turing et les chercheurs de Dartmouth rêvaient d'une machine pensante.\n\nL'idée semblait impossible, mais elle a lancé 70 ans de recherche."},
+
+{k:["demain","futur","avenir","مستقبل"], r:"Demain, plusieurs questions restent ouvertes :\n\n• Viendra-t-on à une IA consciente ?\n• Comment la réguler sans freiner la recherche ?\n• Quel sera son impact sur l'emploi et l'éducation ?"},
+
+/* ---------- Limites & éthique ---------- */
+{k:["hallucination","invente","faux","erreur","هلوسة"], r:"Une hallucination est une réponse fausse énoncée avec assurance par un modèle génératif.\n\nIl prédit la suite la plus probable, il ne vérifie pas les faits. Toujours recouper une information importante."},
+
+{k:["biais","discrimination","biais algorithmique","تحيز"], r:"Un biais algorithmique est une déformation systématique du résultat, souvent héritée des données d'entraînement.\n\nSi les données sous-représentent un groupe, le modèle produit des résultats moins fiables pour ce groupe."},
+
+{k:["boite noire","explicabilite","transparence"], r:"Une « boîte noire » est un système dont on observe les entrées et les sorties sans pouvoir expliquer la décision interne.\n\nCe manque de transparence complique la responsabilité en cas d'erreur."},
+
+{k:["ethique","morale","responsabilite","أخلاق"], r:"Les questions éthiques portent sur trois axes : biais des données, protection des données personnelles, responsabilité en cas d'erreur.\n\nUn principe utile : l'humain reste décideur, la machine reste un outil."},
+
+{k:["rgpd","cnil","protection des donnees"], r:"Le RGPD est le règlement européen sur la protection des données personnelles, en vigueur depuis 2018.\n\nIl impose une base légale pour collecter des données, un droit d'accès et de suppression, et une information claire des personnes."},
+
+{k:["prompt","consigne","formuler"], r:"Un prompt est la consigne donnée à un modèle génératif.\n\nUn bon prompt précise le rôle attendu, le contexte, le format de sortie et les contraintes. Plus la demande est explicite, plus la réponse est utile."},
+
+{k:["llm","grand modele de langage","gpt"], r:"Un grand modèle de langage (LLM) est entraîné sur d'immenses corpus pour prédire le mot suivant.\n\nIl génère du texte cohérent sans comprendre le monde. C'est pourquoi il peut affirmer des choses fausses avec assurance."},
+
+/* ---------- IA symbolique / connexionniste ---------- */
+{k:["symbolique","systeme expert","regles"], r:"L'IA symbolique repose sur des règles écrites par des humains (« si… alors… »).\n\nExplicable et prévisible, mais rigide face à l'imprévu. Les systèmes experts médicaux en sont un exemple."},
+
+{k:["connexionniste","reseau","apprentissage par exemples"], r:"L'IA connexionniste repose sur des réseaux de neurones qui ajustent leurs paramètres à partir d'exemples.\n\nPuissante sur des tâches complexes (vision, langage) mais difficile à expliquer : on parle de « boîte noire »."},
+
+/* ---------- Le projet & l'équipe ---------- */
+{k:["isz","equipe","qui a cree","createur","فريق","من صنع"], r:"ISZ est l'équipe du projet : Gharbi Mohamed (créateur), Guenidi Djamal (idées), Sid Rayan (relecture) et Mustapha Sebaa (explications).\n\nLe projet est un site réalisé par quatre élèves de 1AS du Lycée Oukraf Mohamed."},
+
+{k:["gharbi","gharbi mohamed","غربي محمد"], r:"Gharbi Mohamed est le créateur et porteur du projet.\n\nIl a défini l'objectif, conçu et codé le site, et coordonné l'équipe."},
+
+{k:["guenidi","djamal","قنيدي جمال"], r:"Guenidi Djamal est l'assistant dans les idées.\n\nIl a proposé des contenus, des exemples et des fonctionnalités pour le site."},
+
+{k:["sid rayan","rayan","سيد ريان"], r:"Sid Rayan est le lecteur / relecteur du projet.\n\nIl relit chaque texte pour corriger les erreurs et simplifier le langage."},
+
+{k:["sebaa","mustapha","مصطفى سباع"], r:"Mustapha Sebaa est l'assistant dans l'explication.\n\nIl aide à présenter et expliquer le projet de façon claire à la classe."},
+
+{k:["lycee","oukraf","ouakraf","ثانوية","اوكراف"], r:"Le Lycée Oukraf Mohamed est l'établissement où le projet a été réalisé.\n\nCe site a été conçu comme un exposé numérique, dans le cadre du programme de 1AS."},
+
+{k:["projet","ce site","expose","مشروع"], r:"Ce projet est un exposé numérique sur l'intelligence artificielle.\n\nIl présente une définition, l'histoire de l'idée, les deux formes de l'IA (utile et nuisible), la réalité actuelle, et un bilan hier / aujourd'hui / demain."},
+
+{k:["objectif","but du projet","pourquoi"], r:"L'objectif du projet est triple : expliquer simplement ce qu'est l'IA, montrer qu'elle peut être utile ou nuisible, et faire réfléchir sur son usage actuel.\n\nIl ne s'agit pas de vanter l'IA, ni de la diaboliser."},
+
+/* ---------- Conversation ---------- */
+{k:["aide","help","comment utiliser","comment ca marche","مساعدة"], r:"Écrivez une question en français ou en arabe puis validez. Vous pouvez aussi cliquer sur les trois boutons rapides en haut du chat.\n\nLe bouton « Vider l'historique » efface la conversation sur cet appareil."},
+
+{k:["que sais tu","que sais-tu","tes sujets","ماذا تعرف"], r:"Je connais plusieurs domaines : 1) la définition de l'IA, 2) son histoire (Turing, Dartmouth, Deep Blue, AlphaGo), 3) les deux formes (utile et nuisible), 4) la réalité actuelle, 5) le bilan hier / aujourd'hui / demain, 6) le projet et l'équipe ISZ.\n\nEssayez par exemple : « Qu'est-ce qu'un biais ? » ou « Donne un exemple d'IA utile »."},
+
+{k:["qui es tu","ton nom","tu es qui","من انت","ما اسمك"], r:"Je suis ISZ AI, un assistant local intégré à ce projet.\n\nJe fonctionne sans connexion : je compare votre question à des fiches internes et renvoie la plus proche. Je peux me tromper, vérifiez les points importants dans le site."},
+
+{k:["conscience","sentiments","tu penses","مشاعر"], r:"Je suis un programme : je n'ai ni conscience ni émotions.\n\nJe compare votre question à une base de fiches et je renvoie la réponse la plus proche. Je ne comprends pas le sens comme un humain."},
+
+{k:["conseil","reviser","methode","apprendre","نصيحة","مراجعة"], r:"Trois conseils pour préparer un exposé sur l'IA :\n\n1. Retenez la chronologie : 1950 Turing, 1956 Dartmouth, 1997 Deep Blue, 2012 deep learning, 2022 IA générative.\n2. Sachez citer un exemple d'IA utile (santé) et un exemple d'IA nuisible (deepfakes).\n3. Expliquez en une phrase pourquoi l'IA est difficile à développer."},
+
+/* ---------- Salutations ---------- */
+{k:["bonjour","salut","salam","مرحبا","السلام"], r:"Bonjour ! Je peux expliquer une notion, détailler une date clé, citer un exemple d'IA utile ou nuisible.\n\nQue voulez-vous savoir ?"},
+{k:["merci","thanks","chokran","شكرا"], r:"Avec plaisir. Si vous voulez creuser, essayez « Donne un exemple d'IA utile » ou « Qu'est-ce qu'un deepfake ? »."},
+{k:["au revoir","bye","باي","الى اللقاء"], r:"À bientôt ! Le site fonctionne hors ligne, vous pouvez revenir à tout moment."},
+
+/* ---------- Arabe ---------- */
+{k:["ما هو الذكاء الاصطناعي","الذكاء الاصطناعي","تعريف الذكاء"], r:"الذكاء الاصطناعي هو مجموعة التقنيات التي تسمح للآلة بأداء مهام ذهنية مثل الإدراك والاستدلال والتعلّم.\n\nكل الأنظمة الحالية «ضعيفة»، أي متخصصة في مجال محدد."},
+{k:["من هو تورينغ","تورينغ","تورينج"], r:"آلان تورينغ عالم رياضيات بريطاني، رائد في علم الحاسوب.\n\nفي 1950 اقترح اختبارًا: إذا لم يستطع الحكم التمييز بين آلة وإنسان في حوار مكتوب، يمكن اعتبار الآلة «ذكية»."},
+{k:["تعلم الالة","تعلم الآلة"], r:"تعلّم الآلة هو الأسلوب الذي تتعلم فيه الآلة من الأمثلة بدل تلقينها قواعد مكتوبة يدويًا.\n\nثلاث عائلات: المراقب، وغير المراقب، وبالتعزيز."},
+{k:["التحيز","تحيز"], r:"التحيّز الخوارزمي هو انحراف منهجي في النتيجة، غالبًا موروث من بيانات التدريب.\n\nإذا كانت البيانات لا تمثل مجموعة ما، فستكون النتائج أقل دقة لهذه المجموعة."},
+{k:["نصائح للمراجعة","المراجعة","مراجعة"], r:"ثلاث نصائح للمراجعة:\n\n1. احفظ التواريخ الأساسية: 1950، 1956، 1997، 2012، 2022.\n2. ميّز بين الذكاء النافع والضار.\n3. اشرح في جملة واحدة لماذا الذكاء الاصطناعي صعب التطوير."}
+];
+</script>
+<script>
+/* ============================================================
+   UTILITAIRES
+   ============================================================ */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+/* ============================================================
+   MOTEUR ISZ AI
+   ============================================================ */
+function norm(s){
+  return (s || "").toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[أإآٱ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه")
+    .replace(/[^a-z0-9\u0600-\u06FF\s]/g, " ")
+    .replace(/\s+/g, " ").trim();
+}
+const STOP = new Set(["le","la","les","un","une","des","de","du","au","aux","et","ou","a","en","dans","pour","sur","que","qui","quoi","est","ce","c","il","elle","on","nous","vous","je","tu","se","sa","son","ses","mon","ma","mes","the","of","to","is","what","comment","pourquoi","quand","quel","quelle","s","d","l","j","y","في","من","على","هو","هي","ما","هل"]);
+function words(s){
+  return norm(s).split(" ").filter(w => w.length > 1 && !STOP.has(w));
+}
+function lev(a, b){
+  if(a === b) return 0;
+  if(!a.length) return b.length;
+  if(!b.length) return a.length;
+  let prev = Array.from({length: b.length + 1}, (_, i) => i);
+  for(let i = 1; i <= a.length; i++){
+    const cur = [i];
+    for(let j = 1; j <= b.length; j++){
+      cur[j] = Math.min(prev[j] + 1, cur[j-1] + 1, prev[j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+    }
+    prev = cur;
+  }
+  return prev[b.length];
+}
+function score(question, entry){
+  const q = words(question);
+  const qn = norm(question);
+  if(!q.length) return 0;
+  let best = 0;
+  entry.k.forEach(key => {
+    const kn = norm(key);
+    if(qn.includes(kn)) best = Math.max(best, 4 + kn.length / 12);
+    const kw = words(key);
+    kw.forEach(kwWord => {
+      q.forEach(qWord => {
+        if(qWord === kwWord) best = Math.max(best, 3);
+        else if(kwWord.length > 4 && lev(qWord, kwWord) <= 1) best = Math.max(best, 2);
+      });
+    });
+  });
+  return best;
+}
+function answer(question){
+  let top = null, topScore = 0;
+  KB.forEach(entry => {
+    const s = score(question, entry);
+    if(s > topScore){ topScore = s; top = entry; }
+  });
+  if(top && topScore >= 3) return {text: top.r, ok: true};
+  return {
+    text: "Je n'ai pas trouvé de fiche correspondant à cette question.\n\nEssayez des mots du projet : intelligence artificielle, Turing, IA utile, IA nuisible, deepfake, équipe ISZ, lycée.",
+    ok: false
+  };
+}
+
+/* ============================================================
+   APPARITION AU SCROLL
+   ============================================================ */
+let io = null;
+function observeAll(){
+  if(!("IntersectionObserver" in window)){
+    $$(".rv").forEach(el => el.classList.add("in")); return;
+  }
+  if(!io){
+    io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, {threshold: .12, rootMargin: "0px 0px -8% 0px"});
+  }
+  $$(".rv").forEach(el => { if(!el.classList.contains("in")) io.observe(el); });
+}
+function revealFallback(){
+  setTimeout(() => {
+    $$(".rv").forEach(el => {
+      const r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight && r.bottom > 0) el.classList.add("in");
+    });
+  }, 900);
+}
+
+/* ============================================================
+   MACHINE À ÉCRIRE (HERO)
+   ============================================================ */
+function initTyped(){
+  const el = $("#typed"); if(!el) return;
+  const phrases = [
+    "Un projet de l'équipe ISZ.",
+    "Comprendre, réfléchir, débattre.",
+    "Utile ou dangereuse : à vous de juger.",
+    "Lycée Oukraf Mohamed · 1AS."
+  ];
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){ el.textContent = phrases[0]; return; }
+  let i = 0, j = 0, del = false;
+  const tick = () => {
+    const p = phrases[i];
+    el.textContent = del ? p.slice(0, j--) : p.slice(0, j++);
+    let wait = del ? 28 : 48;
+    if(!del && j > p.length){ del = true; wait = 1700; }
+    else if(del && j < 0){ del = false; j = 0; i = (i + 1) % phrases.length; wait = 320; }
+    setTimeout(tick, wait);
+  };
+  tick();
+}
+
+/* ============================================================
+   PARTICULES DU HERO
+   ============================================================ */
+function initParticles(){
+  const cv = $("#heroCanvas"); if(!cv) return;
+  const ctx = cv.getContext("2d");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w = 0, h = 0, dpr = 1, pts = [], raf = null;
+  const size = () => {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(50, Math.max(18, Math.round(w / 30)));
+    pts = Array.from({length: n}, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22,
+      r: Math.random() * 1.6 + .6
+    }));
+  };
+  const draw = () => {
+    ctx.clearRect(0, 0, w, h);
+    const light = document.documentElement.dataset.theme !== "dark";
+    const dot = light ? "rgba(201,169,97,.55)" : "rgba(232,212,160,.65)";
+    const line = light ? "rgba(201,169,97," : "rgba(232,212,160,";
+    pts.forEach((p, i) => {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > w) p.vx *= -1;
+      if(p.y < 0 || p.y > h) p.vy *= -1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = dot; ctx.fill();
+      for(let k = i + 1; k < pts.length; k++){
+        const q = pts[k];
+        const dx = p.x - q.x, dy = p.y - q.y;
+        const d = Math.hypot(dx, dy);
+        if(d < 130){
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = line + (0.18 * (1 - d / 130)).toFixed(3) + ")";
+          ctx.lineWidth = 1; ctx.stroke();
+        }
+      }
+    });
+    raf = requestAnimationFrame(draw);
+  };
+  size();
+  if(reduce){
+    pts.forEach(p => {
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(201,169,97,.55)"; ctx.fill();
+    });
+    return;
+  }
+  draw();
+  window.addEventListener("resize", size, {passive: true});
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(es => {
+      es.forEach(e => {
+        if(e.isIntersecting && !raf) raf = requestAnimationFrame(draw);
+        else if(!e.isIntersecting && raf){ cancelAnimationFrame(raf); raf = null; }
+      });
+    }, {threshold: 0}).observe(cv);
+  }
+}
+
+/* ============================================================
+   RIPPLE SUR BOUTONS
+   ============================================================ */
+function initRipple(){
+  document.addEventListener("click", e => {
+    const b = e.target.closest(".btn"); if(!b) return;
+    const r = b.getBoundingClientRect();
+    const size = Math.max(r.width, r.height);
+    const s = document.createElement("span");
+    s.className = "rip";
+    s.style.width = s.style.height = size + "px";
+    s.style.left = (e.clientX - r.left - size / 2) + "px";
+    s.style.top = (e.clientY - r.top - size / 2) + "px";
+    b.appendChild(s);
+    setTimeout(() => s.remove(), 620);
+  });
+}
+
+/* ============================================================
+   THÈME CLAIR / SOMBRE
+   ============================================================ */
+function initTheme(){
+  const html = document.documentElement;
+  const saved = localStorage.getItem("isz-theme");
+  if(saved === "light" || saved === "dark") html.dataset.theme = saved;
+  const icon = $("#tIcon");
+  const paint = () => {
+    if(html.dataset.theme === "dark"){
+      icon.innerHTML = '<path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="4"/>';
+    }else{
+      icon.innerHTML = '<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/>';
+    }
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute("content", html.dataset.theme === "dark" ? "#0A0A0A" : "#FAFAFA");
+  };
+  paint();
+  $("#tBtn").addEventListener("click", () => {
+    html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+    localStorage.setItem("isz-theme", html.dataset.theme);
+    paint();
+  });
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function initNav(){
+  const nav = $("#nav"), burger = $("#burger");
+  const closeMenu = () => { nav.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); };
+  burger.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", String(open));
+  });
+  nav.addEventListener("click", e => { if(e.target.tagName === "A") closeMenu(); });
+
+  const sections = $$("main section[id]");
+  const setActive = id => {
+    $$("#nav a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + id));
+  };
+  if("IntersectionObserver" in window){
+    const o = new IntersectionObserver(es => {
+      es.forEach(e => { if(e.isIntersecting) setActive(e.target.id); });
+    }, {rootMargin: "-45% 0px -50% 0px"});
+    sections.forEach(s => o.observe(s));
+  }
+  const top = $("#top");
+  top.addEventListener("click", () => window.scrollTo({top: 0, behavior: "smooth"}));
+  window.addEventListener("scroll", () => {
+    top.classList.toggle("show", window.scrollY > 600);
+  }, {passive: true});
+  $("#year").textContent = new Date().getFullYear();
+}
+
+/* ============================================================
+   CHAT ISZ AI
+   ============================================================ */
+function initChat(){
+  const log = $("#log"), form = $("#chatForm"), input = $("#chatInput"), sugg = $("#sugg");
+  const KEY = "isz-chat-history";
+  let history = [];
+
+  const addMsg = (who, text, save = true) => {
+    const d = document.createElement("div");
+    d.className = "msg " + (who === "me" ? "me" : "bot");
+    d.textContent = text;
+    if(who === "bot"){
+      const meta = document.createElement("span");
+      meta.className = "meta"; meta.textContent = "ISZ AI — réponse locale";
+      d.appendChild(meta);
+    }
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+    if(save){ history.push({who, text}); persist(); }
+  };
+  const persist = () => {
+    try{ localStorage.setItem(KEY, JSON.stringify(history.slice(-40))); }catch(e){}
+  };
+  const suggestions = ["C'est quoi l'IA ?", "Qu'est-ce qu'un deepfake ?", "Donne un exemple d'IA utile"];
+  const paintSugg = () => {
+    sugg.innerHTML = "";
+    suggestions.forEach(s => {
+      const b = document.createElement("button");
+      b.type = "button"; b.textContent = s;
+      b.addEventListener("click", () => send(s));
+      sugg.appendChild(b);
+    });
+  };
+  let busy = false;
+  const send = q => {
+    const text = String(q || "").trim();
+    if(!text || busy) return;
+    addMsg("me", text); input.value = ""; busy = true;
+    const bubble = document.createElement("div");
+    bubble.className = "msg bot typing"; bubble.textContent = "ISZ AI réfléchit";
+    log.appendChild(bubble); log.scrollTop = log.scrollHeight;
+    setTimeout(() => {
+      const res = answer(text);
+      bubble.remove();
+      addMsg("bot", res.text);
+      busy = false;
+    }, 420);
+  };
+  form.addEventListener("submit", e => { e.preventDefault(); send(input.value); });
+  $$(".quick button").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  $("#clearChat").addEventListener("click", () => {
+    history = [];
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    log.innerHTML = "";
+    addMsg("bot", "Historique effacé. Posez une nouvelle question quand vous voulez.", false);
+  });
+
+  let restored = [];
+  try{ restored = JSON.parse(localStorage.getItem(KEY) || "[]"); }catch(e){ restored = []; }
+  if(Array.isArray(restored) && restored.length){
+    restored.forEach(m => {
+      const d = document.createElement("div");
+      d.className = "msg " + (m.who === "me" ? "me" : "bot");
+      d.textContent = m.text;
+      log.appendChild(d);
+    });
+    history = restored;
+  }else{
+    addMsg("bot", "Bonjour ! Je suis ISZ AI, l'assistant de ce projet.\n\nPosez-moi une question sur l'intelligence artificielle, ou utilisez l'un des trois boutons ci-dessus.", false);
+  }
+  paintSugg();
+}
+
+/* ============================================================
+   FALLBACK IMAGES
+   ============================================================ */
+function initImageFallback(){
+  $$("img").forEach(img => {
+    const fail = () => {
+      const f = img.closest("figure");
+      if(f) f.classList.add("failed");
+    };
+    img.addEventListener("error", fail);
+    if(img.complete && !img.naturalWidth) fail();
+  });
+}
+
+/* ============================================================
+   INITIALISATION
+   ============================================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  initNav();
+  initChat();
+  initTyped();
+  initParticles();
+  initRipple();
+  initImageFallback();
+  observeAll();
+  revealFallback();
+});
+</script>
+</body>
+</html>
