@@ -6,10 +6,12 @@
 <title>L'Intelligence Artificielle — Projet ISZ · Lycée Oukraf Mohamed</title>
 <meta name="description" content="Projet scolaire sur l'intelligence artificielle réalisé par l'équipe ISZ du Lycée Oukraf Mohamed, 1AS.">
 <meta name="theme-color" content="#FAFAFA">
-<script>document.documentElement.classList.add("js");</script>
+<script>document.documentElement.classList.add("js");try{var _t=localStorage.getItem("isz-theme");if(_t==="light"||_t==="dark")document.documentElement.dataset.theme=_t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&family=Noto+Sans+Arabic:wght@400;600&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23C9A961'/%3E%3Ctext x='32' y='41' font-family='Arial' font-weight='900' font-size='24' text-anchor='middle' fill='%230A0A0A'%3EISZ%3C/text%3E%3C/svg%3E">
 <style>
 /* ============================================================
-   1. VARIABLES — Palette noir / blanc / gris + or
+   1. VARIABLES
    ============================================================ */
 :root{
   --bg:#FAFAFA;--bg2:#F2F2F2;--card:#FFFFFF;--card2:#F8F8F8;
@@ -34,7 +36,7 @@ html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
   margin:0;background:var(--bg);color:var(--ink);
-  font:16px/1.65 "Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  font:16px/1.65 "Inter","Noto Sans Arabic","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
   transition:background-color .3s,color .3s;
 }
@@ -52,19 +54,19 @@ button{font-family:inherit}
   display:flex;align-items:center;gap:14px;
   padding:0 clamp(14px,4vw,32px);
   background:color-mix(in srgb,var(--bg) 90%,transparent);
-  backdrop-filter:blur(14px) saturate(180%);
+  -webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);
   border-bottom:1px solid var(--line);
 }
 .brand{display:flex;align-items:center;gap:10px;min-width:0}
 .logo{
-  width:38px;height:38px;flex:0 0 auto;border-radius:10px;
+  width:44px;height:44px;flex:0 0 auto;border-radius:11px;
   display:grid;place-items:center;
   background:linear-gradient(140deg,var(--gold),#A8853F);
-  color:#0A0A0A;font-weight:900;font-size:.82rem;letter-spacing:.5px;
+  color:#0A0A0A;font-weight:900;font-size:.9rem;letter-spacing:.5px;
   box-shadow:0 2px 10px rgba(201,169,97,.35);
 }
 .brand b{display:block;color:var(--ink-strong);font-size:.9rem;line-height:1.2;white-space:nowrap}
-.brand span{display:block;color:var(--muted);font-size:.7rem;line-height:1.2;white-space:nowrap}
+.brand b + span{display:block;color:var(--muted);font-size:.7rem;line-height:1.2;white-space:nowrap}
 .nav{margin-left:auto;display:flex;align-items:center;gap:2px}
 .nav a{color:var(--ink);font-size:.85rem;font-weight:600;padding:9px 12px;border-radius:9px;white-space:nowrap;transition:.2s}
 .nav a:hover{background:var(--gold-soft);color:var(--ink-strong)}
@@ -81,7 +83,7 @@ button{font-family:inherit}
 #burger{display:none}
 
 /* ============================================================
-   3. SECTIONS & TYPO
+   3. SECTIONS
    ============================================================ */
 section{padding:90px 6vw;scroll-margin-top:var(--head)}
 .wrap{max-width:var(--maxw);margin:0 auto}
@@ -140,9 +142,9 @@ figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
     var(--bg);
   text-align:center;
 }
-#heroCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+#heroCanvas,#raysCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+#raysCanvas{z-index:0}
 .hero-in{position:relative;z-index:2;max-width:860px;margin:0 auto;width:100%}
-/* Logo ISZ central */
 .logo-hero{
   width:110px;height:110px;margin:0 auto 22px;border-radius:50%;
   display:grid;place-items:center;
@@ -154,12 +156,17 @@ figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
 .logo-hero span{display:block;animation:spin 12s linear infinite reverse}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes glow{to{box-shadow:0 0 80px rgba(201,169,97,.6),0 0 160px rgba(201,169,97,.25)}}
-/* Lycée */
 .lycee{
   display:inline-block;font-size:.85rem;font-weight:700;letter-spacing:.15em;
   text-transform:uppercase;color:var(--gold);
   padding:6px 16px;border:1px solid var(--gold);border-radius:999px;
   margin-bottom:22px;background:var(--gold-soft);
+}
+.badge-1as{
+  display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gold);
+  padding:3px 10px;border:1px solid var(--gold);border-radius:999px;
+  margin-left:8px;background:transparent;
 }
 .hero h1{
   font-size:clamp(2rem,5.5vw,3.4rem);line-height:1.08;letter-spacing:-.03em;
@@ -168,7 +175,6 @@ figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
 .hero h1 em{font-style:normal;color:var(--gold)}
 .typed-line{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--muted);margin:0 0 30px;min-height:1.7em;font-weight:500}
 #typed{border-right:2px solid var(--gold);padding-right:4px}
-/* Auteurs */
 .authors{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
   gap:10px;max-width:680px;margin:0 auto 30px;text-align:left;
@@ -206,32 +212,36 @@ figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
    ============================================================ */
 .journey{display:grid;gap:20px;grid-template-columns:repeat(3,1fr);margin-top:30px;position:relative}
 .journey::before{
-  content:"";position:absolute;top:44px;left:16%;right:16%;height:2px;
+  content:"";position:absolute;top:56px;left:16%;right:16%;height:2px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent);
 }
-.journey .card{position:relative;z-index:1;text-align:center;align-items:center}
+.journey .card{position:relative;z-index:1;text-align:center;align-items:center;padding-top:0;overflow:hidden}
+.journey .card .jfig{width:100%;aspect-ratio:16/9;border:0;border-radius:0;margin:0 -24px 18px}
 .journey .year{
-  width:88px;height:88px;border-radius:50%;display:grid;place-items:center;
+  padding:8px 16px;border-radius:999px;
   background:var(--card);border:2px solid var(--gold);color:var(--gold);
   font-weight:900;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;
   margin:0 auto 16px;box-shadow:0 0 30px rgba(201,169,97,.25);
+  position:relative;z-index:2;
 }
-.journey h3{font-size:1.15rem}
-.journey p{text-align:center}
+.journey h3{font-size:1.15rem;position:relative;z-index:2}
+.journey p{text-align:center;position:relative;z-index:2}
 
 /* ============================================================
-   8. DEUX FORMES (utile / nuisible)
+   8. DEUX FORMES
    ============================================================ */
 .forms{display:grid;gap:24px;grid-template-columns:1fr 1fr;margin-top:30px}
 .form-col{
   background:var(--card);border:1px solid var(--line);border-radius:var(--r);
-  padding:28px;overflow:hidden;
+  overflow:hidden;display:flex;flex-direction:column;
 }
 .form-col.good-col{border-top:4px solid var(--good)}
 .form-col.bad-col{border-top:4px solid var(--bad)}
-.form-col h3{font-size:1.3rem;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.form-col .ffig{width:100%;aspect-ratio:16/9;border:0;border-radius:0}
+.form-col .fbody{padding:24px;display:flex;flex-direction:column;gap:10px}
+.form-col h3{font-size:1.3rem;margin:0 0 4px;display:flex;align-items:center;gap:10px}
 .form-col h3 .ico{font-size:1.4rem}
-.form-col > p.mut{margin-bottom:20px}
+.form-col > .fbody > p.mut{margin-bottom:16px}
 .ex{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .ex li{
   display:flex;gap:12px;align-items:flex-start;
@@ -252,7 +262,7 @@ figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
 .synth::after{content:" »";color:var(--gold);font-size:1.4rem}
 
 /* ============================================================
-   9. RÉALITÉ ACTUELLE
+   9. RÉALITÉ
    ============================================================ */
 .reality{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .real-card{
@@ -271,7 +281,7 @@ figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
 }
 
 /* ============================================================
-   10. ISZ AI CHAT
+   10. ISZ AI
    ============================================================ */
 .ai{display:grid;gap:22px;grid-template-columns:1.6fr 1fr;align-items:start;margin-top:30px}
 .chat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden;min-height:520px}
@@ -280,10 +290,7 @@ figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
 .chat-hd b{font-size:.94rem;color:var(--ink-strong)}
 .chat-hd small{color:var(--muted);font-size:.74rem;margin-left:auto}
 .quick{display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--card2)}
-.quick button{
-  font-size:.78rem;font-weight:600;padding:8px 12px;border-radius:999px;cursor:pointer;
-  background:transparent;border:1px solid var(--line);color:var(--ink);transition:.2s;
-}
+.quick button{font-size:.78rem;font-weight:600;padding:8px 12px;border-radius:999px;cursor:pointer;background:transparent;border:1px solid var(--line);color:var(--ink);transition:.2s}
 .quick button:hover{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
 .log{flex:1;overflow:auto;padding:20px 18px;display:flex;flex-direction:column;gap:12px;max-height:430px;scroll-behavior:smooth}
 .msg{max-width:86%;padding:12px 15px;border-radius:14px;font-size:.9rem;line-height:1.55;white-space:pre-wrap;word-wrap:break-word}
@@ -293,21 +300,12 @@ figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
 .typing::after{content:"…";animation:dotpulse 1.1s infinite}
 @keyframes dotpulse{0%,100%{opacity:1}50%{opacity:.3}}
 .sugg{display:flex;gap:8px;flex-wrap:wrap;padding:0 18px 14px}
-.sugg button{
-  font-size:.76rem;padding:7px 12px;border-radius:999px;cursor:pointer;
-  background:var(--gold-soft);border:1px solid transparent;color:var(--gold);font-weight:600;
-}
+.sugg button{font-size:.76rem;padding:7px 12px;border-radius:999px;cursor:pointer;background:var(--gold-soft);border:1px solid transparent;color:var(--gold);font-weight:600}
 .sugg button:hover{border-color:var(--gold)}
 .chat-in{display:flex;gap:8px;padding:14px 16px;border-top:1px solid var(--line);background:var(--card2)}
-.chat-in input{
-  flex:1;padding:12px 15px;border-radius:11px;font-size:.9rem;font-family:inherit;
-  background:var(--card);border:1px solid var(--line);color:var(--ink-strong);min-width:0;
-}
+.chat-in input{flex:1;padding:12px 15px;border-radius:11px;font-size:.9rem;font-family:inherit;background:var(--card);border:1px solid var(--line);color:var(--ink-strong);min-width:0}
 .chat-in input::placeholder{color:var(--muted)}
-.chat-in button.send{
-  width:46px;height:46px;flex:0 0 auto;border-radius:11px;border:0;cursor:pointer;
-  background:var(--gold);color:#0A0A0A;display:grid;place-items:center;transition:.2s;
-}
+.chat-in button.send{width:46px;height:46px;flex:0 0 auto;border-radius:11px;border:0;cursor:pointer;background:var(--gold);color:#0A0A0A;display:grid;place-items:center;transition:.2s}
 .chat-in button.send:hover{box-shadow:0 6px 20px rgba(201,169,97,.45)}
 .chat-in button.send svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .ai-side{display:grid;gap:14px}
@@ -316,11 +314,7 @@ figure.sm{aspect-ratio:16/9;margin:-24px -24px 14px;border:0;border-radius:0}
    11. ÉQUIPE
    ============================================================ */
 .member{display:flex;gap:12px;align-items:center;margin-bottom:10px}
-.avatar{
-  width:48px;height:48px;border-radius:12px;flex:0 0 auto;
-  display:grid;place-items:center;font-weight:900;font-size:.9rem;
-  background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,169,97,.35);
-}
+.avatar{width:48px;height:48px;border-radius:12px;flex:0 0 auto;display:grid;place-items:center;font-weight:900;font-size:.9rem;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,169,97,.35)}
 
 /* ============================================================
    12. FOOTER
@@ -332,32 +326,25 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 footer ul li{color:var(--ink);font-size:.88rem}
 footer ul a{color:var(--ink);font-size:.88rem}
 footer ul a:hover{color:var(--gold)}
-.f-bottom{
-  max-width:var(--maxw);margin:40px auto 0;padding-top:24px;border-top:1px solid var(--line);
-  display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;
-  font-size:.8rem;color:var(--muted);
-}
+.f-thanks{max-width:var(--maxw);margin:24px auto 0;padding:16px 20px;border-radius:12px;background:var(--gold-soft);border:1px solid rgba(201,169,97,.3);text-align:center;font-size:.9rem;color:var(--ink-strong)}
+.f-thanks b{color:var(--gold)}
+.f-bottom{max-width:var(--maxw);margin:24px auto 0;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:.8rem;color:var(--muted)}
 
 /* ============================================================
-   13. TOP BUTTON
+   13. TOP
    ============================================================ */
-#top{
-  position:fixed;right:20px;bottom:24px;z-index:84;width:46px;height:46px;
-  border-radius:12px;display:grid;place-items:center;cursor:pointer;
-  background:var(--card);border:1px solid var(--line);color:var(--ink);
-  opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow);
-}
+#top{position:fixed;right:20px;bottom:24px;z-index:84;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;cursor:pointer;background:var(--card);border:1px solid var(--line);color:var(--ink);opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow)}
 #top.show{opacity:1;pointer-events:auto}
 #top:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
 #top svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ============================================================
-   14. ANIMATIONS (fade simple)
+   14. ANIMATIONS
    ============================================================ */
 .rv{transition:opacity .7s ease,transform .7s ease}
 .js .rv{opacity:0;transform:translateY(24px)}
 .js .rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.rv,.js .rv{opacity:1;transform:none;transition:none}.logo-hero{animation:none}}
+@media (prefers-reduced-motion:reduce){.rv,.js .rv{opacity:1;transform:none;transition:none}.logo-hero,.logo-hero span{animation:none}.star-border i{display:none}}
 
 /* ============================================================
    15. RESPONSIVE
@@ -371,14 +358,14 @@ footer ul a:hover{color:var(--gold)}
 }
 @media (max-width:860px){
   :root{--head:60px}
-  .nav{display:none}#burger{display:grid}.brand span{display:none}
+  .nav{display:none}#burger{display:grid}.brand b + span{display:none}
   section{padding:64px 6vw}
   .hero{padding-top:calc(var(--head) + 30px);min-height:auto}
   .nav.open{
     display:flex;flex-direction:column;align-items:stretch;gap:2px;
     position:fixed;top:var(--head);left:0;right:0;z-index:78;
     background:var(--bg2);border-bottom:1px solid var(--line);
-    padding:12px 16px 18px;max-height:calc(100vh - var(--head));overflow:auto;
+    padding:12px 16px 18px;max-height:calc(100dvh - var(--head));overflow:auto;
   }
   .nav.open a{padding:14px 12px;font-size:.95rem;border-radius:10px}
   .nav.open a+a{border-top:1px solid var(--line)}
@@ -388,10 +375,62 @@ footer ul a:hover{color:var(--gold)}
 }
 @media (max-width:560px){
   .f-grid{grid-template-columns:1fr}
-  .cta .btn{flex:1 1 100%;justify-content:center}
+  .cta .btn,.cta .star-border{flex:1 1 100%;justify-content:center}
   .msg{max-width:94%}
   .authors{grid-template-columns:1fr}
 }
+
+/* ============================================================
+   16. STAR BORDER, PRÉSENTATION, ANIMATIONS
+   ============================================================ */
+.star-border{position:relative;display:inline-flex;padding:2px;border-radius:13px;overflow:hidden;--star:#A8853F;box-shadow:0 8px 28px rgba(201,169,97,.35);transition:.22s}
+html[data-theme="dark"] .star-border{--star:#E8D4A0}
+.star-border:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,169,97,.5)}
+.star-border .btn{position:relative;z-index:1;box-shadow:none;transform:none}
+.star-border i{position:absolute;width:300%;height:50%;border-radius:50%;opacity:.8;background:radial-gradient(circle,var(--star),transparent 10%);animation:sbb 6s linear infinite alternate}
+.star-border i.b{bottom:-11px;right:-250%}
+.star-border i.t{top:-10px;left:-250%;animation-name:sbt}
+@keyframes sbb{from{transform:translateX(0);opacity:1}to{transform:translateX(-100%);opacity:0}}
+@keyframes sbt{from{transform:translateX(0);opacity:1}to{transform:translateX(100%);opacity:0}}
+
+#present{display:none;position:fixed;inset:0;z-index:200;background:#0A0A0A;color:#D4D4D4;overflow:hidden;--bg:#0A0A0A;--bg2:#0F0F0F;--card:#151515;--card2:#1A1A1A;--ink:#D4D4D4;--ink-strong:#FFFFFF;--muted:#8A8A8A;--line:rgba(255,255,255,.10);--line-strong:rgba(255,255,255,.18);--gold-soft:rgba(201,169,97,.16)}
+#present.open{display:block}
+.ps-bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.ps-stage{position:absolute;inset:0}
+.ps-sl{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:64px 5vw 84px;overflow:hidden}
+.ps-sl.on{display:flex;animation:psin .5s}
+@keyframes psin{from{opacity:0}}
+.ps-sl::before{content:"";position:absolute;inset:-4%;background:var(--art) center/cover no-repeat;opacity:.2;animation:drift 28s ease-in-out infinite alternate;pointer-events:none}
+@keyframes drift{to{transform:scale(1.08) translate(-1.5%,1%)}}
+.ps-s{position:relative;width:min(1140px,100%);max-height:100%;overflow:auto;padding:4px}
+.ps-c{text-align:center}
+.ps-t{font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.15;margin:0 0 22px;color:var(--ink-strong);font-weight:800;letter-spacing:-.02em}
+.ps-t::after{content:"";display:block;width:46px;height:3px;border-radius:3px;background:var(--gold);margin-top:12px}
+.ps-c .ps-t{font-size:clamp(2.2rem,6vw,4rem);font-weight:900}
+.ps-c .ps-t::after{margin:14px auto 0}
+.ps-t em{font-style:normal;color:var(--gold)}
+.ps-x{position:absolute;top:16px;right:16px;z-index:3;background:var(--card)}
+.ps-bar{position:absolute;left:0;right:0;bottom:22px;z-index:3;display:flex;justify-content:center;align-items:center;gap:16px;color:var(--muted);font-size:.85rem}
+.ps-bar .icon-btn{background:var(--card)}
+.ps-prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--line);z-index:3}
+.ps-prog i{display:block;height:100%;width:0;background:var(--gold);transition:width .5s}
+.ps-logo{display:flex;justify-content:center;margin:0 0 22px}
+.ps-logo .logo-hero{margin:0}
+.ps-chat{min-height:0;text-align:left}
+.ps-chat .log{min-height:22vh;max-height:36vh}
+.ps-chat .msg{font-size:1rem}
+.ps-gmw{max-width:360px;grid-template-columns:1fr;margin:0 auto 10px}
+.ps-gmw .author{border-color:var(--gold);padding:14px 18px}
+.ps-gmw .author b{font-size:1.05rem}
+.bst{position:absolute;left:50%;top:42%;width:8px;height:8px;border-radius:50%;background:var(--gold-bright);pointer-events:none}
+.bw{display:inline-block;will-change:transform,filter,opacity}
+.cnt{font-variant-numeric:tabular-nums}
+
+/* v2 : polices, cercle "Aujourd'hui", progression */
+h1,h2,h3,.ps-t,.brand b,.year,.btn,.card .tag,footer h4,.lycee{font-family:"Sora","Inter","Segoe UI",system-ui,sans-serif}
+.hero h1{letter-spacing:-.035em}
+.sp{position:fixed;left:0;top:0;right:0;height:3px;background:var(--gold);transform-origin:0 50%;transform:scaleX(0);z-index:90;pointer-events:none}
+.card,.real-card{--mx:50%;--my:-300px;background-image:radial-gradient(260px circle at var(--mx) var(--my),rgba(201,169,97,.10),transparent 70%)}
 </style>
 </head>
 <body>
@@ -419,10 +458,11 @@ footer ul a:hover{color:var(--gold)}
   </nav>
 
   <div class="hd-actions">
+    <button class="icon-btn" type="button" data-present aria-label="Lancer le mode présentation" title="Mode présentation"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
     <button class="icon-btn" id="tBtn" aria-label="Changer de thème clair / sombre">
       <svg viewBox="0 0 24 24" id="tIcon"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg>
     </button>
-    <button class="icon-btn" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <button class="icon-btn" id="burger" aria-controls="nav" aria-label="Ouvrir le menu" aria-expanded="false">
       <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
   </div>
@@ -434,18 +474,14 @@ footer ul a:hover{color:var(--gold)}
      HERO
      ============================================================ -->
 <section class="hero" id="accueil">
+  <canvas id="raysCanvas" aria-hidden="true"></canvas>
   <canvas id="heroCanvas" aria-hidden="true"></canvas>
   <div class="hero-in">
-    <!-- Logo ISZ central -->
     <div class="logo-hero" role="img" aria-label="Logo de l'équipe ISZ"><span>ISZ</span></div>
-
-    <!-- Lycée -->
-    <div class="lycee">Lycée Oukraf Mohamed</div>
-
+    <div class="lycee">Lycée Oukraf Mohamed <span class="badge-1as">1AS</span></div>
     <h1>L'Intelligence <em>Artificielle</em></h1>
     <p class="typed-line"><span id="typed"></span></p>
 
-    <!-- Auteurs -->
     <div class="authors" role="list" aria-label="Participants du projet">
       <div class="author" role="listitem">
         <span class="ini" aria-hidden="true">GM</span>
@@ -466,11 +502,12 @@ footer ul a:hover{color:var(--gold)}
     </div>
 
     <div class="cta">
-      <a class="btn btn-primary" href="#definition">
+      <span class="star-border"><i class="b"></i><i class="t"></i><a class="btn btn-primary" href="#definition">
         Découvrir le projet
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
+      </a></span>
       <a class="btn btn-ghost" href="#iszai">Interroger ISZ AI</a>
+      <button type="button" class="btn btn-ghost" data-present>Mode présentation</button>
     </div>
   </div>
 </section>
@@ -517,11 +554,11 @@ footer ul a:hover{color:var(--gold)}
     </div>
 
     <h3 class="rv" style="font-size:1.2rem;margin-top:50px">Comment l'idée est-elle née ?</h3>
-    <p class="mut rv">L'idée d'une machine pensante n'est pas nouvelle : elle a plus de 70 ans.</p>
+    <p class="mut rv">L'idée d'une machine pensante n'est pas nouvelle : elle a plus de <span class="cnt" data-from="0" data-to="70">70</span> ans.</p>
     <div class="grid-2 rv">
       <div class="card">
-        <p><b style="color:var(--gold)">1950 — Alan Turing</b> imagine un test : si un juge ne peut pas distinguer une machine d'un humain lors d'une conversation écrite, on peut la considérer comme « intelligente ».</p>
-        <p style="margin-top:10px"><b style="color:var(--gold)">1956 — Conférence de Dartmouth</b> : un groupe de chercheurs officialise l'expression « intelligence artificielle » et se lance dans ce défi.</p>
+        <p><b style="color:var(--gold)"><span class="cnt" data-from="1900" data-to="1950">1950</span> — Alan Turing</b> imagine un test : si un juge ne peut pas distinguer une machine d'un humain lors d'une conversation écrite, on peut la considérer comme « intelligente ».</p>
+        <p style="margin-top:10px"><b style="color:var(--gold)"><span class="cnt" data-from="1900" data-to="1956">1956</span> — Conférence de Dartmouth</b> : un groupe de chercheurs officialise l'expression « intelligence artificielle » et se lance dans ce défi.</p>
         <p style="margin-top:10px">Depuis, les développeurs n'ont cessé d'améliorer leurs méthodes : des règles écrites à la main, puis des réseaux de neurones qui apprennent seuls à partir d'exemples.</p>
       </div>
       <figure>
@@ -533,7 +570,7 @@ footer ul a:hover{color:var(--gold)}
 </section>
 
 <!-- ============================================================
-     DEUX FORMES
+     DEUX FORMES (avec images)
      ============================================================ -->
 <section id="formes">
   <div class="wrap">
@@ -541,28 +578,36 @@ footer ul a:hover{color:var(--gold)}
     <p class="mut rv">La même technologie peut être utile ou nuisible : tout dépend de l'usage qu'on en fait.</p>
 
     <div class="forms rv">
-      <!-- UTILE -->
       <div class="form-col good-col">
-        <h3><span class="ico" aria-hidden="true">✅</span> L'IA utile</h3>
-        <p class="mut">Quatre exemples concrets où l'IA aide vraiment les humains.</p>
-        <ul class="ex">
-          <li><span class="emoji" aria-hidden="true">🏥</span><div><b>Médecine</b><span>Aide à détecter des anomalies sur les radios et les scanners, sans remplacer le médecin.</span></div></li>
-          <li><span class="emoji" aria-hidden="true">🎓</span><div><b>Éducation</b><span>Exercices adaptés au niveau de chaque élève et retours immédiats.</span></div></li>
-          <li><span class="emoji" aria-hidden="true">🚗</span><div><b>Transport</b><span>Systèmes d'aide à la conduite : freinage d'urgence, maintien de voie.</span></div></li>
-          <li><span class="emoji" aria-hidden="true">🌱</span><div><b>Environnement</b><span>Optimisation de la consommation d'énergie et des réseaux électriques.</span></div></li>
-        </ul>
+        <figure class="ffig">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=70" alt="Médecin analysant une image médicale, illustration de l'IA utile en santé" loading="lazy">
+        </figure>
+        <div class="fbody">
+          <h3><span class="ico" aria-hidden="true">✅</span> L'IA utile</h3>
+          <p class="mut">Quatre exemples concrets où l'IA aide vraiment les humains.</p>
+          <ul class="ex">
+            <li><span class="emoji" aria-hidden="true">🏥</span><div><b>Médecine</b><span>Aide à détecter des anomalies sur les radios et les scanners, sans remplacer le médecin.</span></div></li>
+            <li><span class="emoji" aria-hidden="true">🎓</span><div><b>Éducation</b><span>Exercices adaptés au niveau de chaque élève et retours immédiats.</span></div></li>
+            <li><span class="emoji" aria-hidden="true">🚗</span><div><b>Transport</b><span>Systèmes d'aide à la conduite : freinage d'urgence, maintien de voie.</span></div></li>
+            <li><span class="emoji" aria-hidden="true">🌱</span><div><b>Environnement</b><span>Optimisation de la consommation d'énergie et des réseaux électriques.</span></div></li>
+          </ul>
+        </div>
       </div>
 
-      <!-- NUISIBLE -->
       <div class="form-col bad-col">
-        <h3><span class="ico" aria-hidden="true">⚠️</span> L'IA nuisible</h3>
-        <p class="mut">Quatre exemples concrets où l'IA cause de vrais problèmes.</p>
-        <ul class="ex">
-          <li><span class="emoji" aria-hidden="true">🎭</span><div><b>Deepfakes</b><span>Vidéos et voix truquées qui font dire à une personne ce qu'elle n'a jamais dit.</span></div></li>
-          <li><span class="emoji" aria-hidden="true">📰</span><div><b>Fausses informations</b><span>Génération massive de faux articles et de fausses images virales.</span></div></li>
-          <li><span class="emoji" aria-hidden="true">🔒</span><div><b>Atteinte à la vie privée</b><span>Reconnaissance faciale et collecte de données sans consentement.</span></div></li>
-          <li><span class="emoji" aria-hidden="true">📝</span><div><b>Triche scolaire</b><span>Devoirs et exposés entièrement rédigés par l'IA, sans aucun effort personnel.</span></div></li>
-        </ul>
+        <figure class="ffig">
+          <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1000&q=70" alt="Écran d'ordinateur avec des données, illustration des risques de l'IA" loading="lazy">
+        </figure>
+        <div class="fbody">
+          <h3><span class="ico" aria-hidden="true">⚠️</span> L'IA nuisible</h3>
+          <p class="mut">Quatre exemples concrets où l'IA cause de vrais problèmes.</p>
+          <ul class="ex">
+            <li><span class="emoji" aria-hidden="true">🎭</span><div><b>Deepfakes</b><span>Vidéos et voix truquées qui font dire à une personne ce qu'elle n'a jamais dit.</span></div></li>
+            <li><span class="emoji" aria-hidden="true">📰</span><div><b>Fausses informations</b><span>Génération massive de faux articles et de fausses images virales.</span></div></li>
+            <li><span class="emoji" aria-hidden="true">🔒</span><div><b>Atteinte à la vie privée</b><span>Reconnaissance faciale et collecte de données sans consentement.</span></div></li>
+            <li><span class="emoji" aria-hidden="true">📝</span><div><b>Triche scolaire</b><span>Devoirs et exposés entièrement rédigés par l'IA, sans aucun effort personnel.</span></div></li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -571,7 +616,7 @@ footer ul a:hover{color:var(--gold)}
 </section>
 
 <!-- ============================================================
-     RÉALITÉ ACTUELLE
+     RÉALITÉ
      ============================================================ -->
 <section id="realite">
   <div class="wrap">
@@ -580,9 +625,7 @@ footer ul a:hover{color:var(--gold)}
 
     <div class="reality rv">
       <article class="real-card">
-        <figure>
-          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=70" alt="Élèves en classe avec un ordinateur" loading="lazy">
-        </figure>
+        <figure><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=70" alt="Élèves en classe avec un ordinateur" loading="lazy"></figure>
         <div class="body">
           <h3>Aujourd'hui, des élèves font leurs devoirs avec l'IA</h3>
           <p>Beaucoup d'élèves utilisent un assistant pour rédiger leurs exercices entièrement, au lieu de réfléchir eux-mêmes.</p>
@@ -591,9 +634,7 @@ footer ul a:hover{color:var(--gold)}
       </article>
 
       <article class="real-card">
-        <figure>
-          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=70" alt="Médecin analysant une image médicale" loading="lazy">
-        </figure>
+        <figure><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=70" alt="Médecin analysant une image médicale" loading="lazy"></figure>
         <div class="body">
           <h3>Dans les hôpitaux, l'IA aide au diagnostic</h3>
           <p>Des hôpitaux utilisent l'IA pour repérer des anomalies sur les radios et les scanners, plus vite qu'à l'œil nu.</p>
@@ -602,9 +643,7 @@ footer ul a:hover{color:var(--gold)}
       </article>
 
       <article class="real-card">
-        <figure>
-          <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=70" alt="Smartphone avec réseaux sociaux, illustration des recommandations" loading="lazy">
-        </figure>
+        <figure><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=70" alt="Smartphone avec réseaux sociaux, illustration des recommandations" loading="lazy"></figure>
         <div class="body">
           <h3>Les réseaux sociaux choisissent ce que tu vois</h3>
           <p>Chaque vidéo ou publication que tu regardes est sélectionnée par un algorithme qui prédit ce qui va te plaire.</p>
@@ -613,9 +652,7 @@ footer ul a:hover{color:var(--gold)}
       </article>
 
       <article class="real-card">
-        <figure>
-          <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=70" alt="Documents et CV, illustration du recrutement assisté par IA" loading="lazy">
-        </figure>
+        <figure><img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=70" alt="Documents et CV, illustration du recrutement assisté par IA" loading="lazy"></figure>
         <div class="body">
           <h3>Des entreprises filtrent les CV avec l'IA</h3>
           <p>Avant même l'entretien, un algorithme décide quels CV sont retenus et lesquels sont écartés.</p>
@@ -627,7 +664,7 @@ footer ul a:hover{color:var(--gold)}
 </section>
 
 <!-- ============================================================
-     BILAN : HIER / AUJOURD'HUI / DEMAIN
+     BILAN (avec images dans les cartes)
      ============================================================ -->
 <section id="bilan">
   <div class="wrap">
@@ -636,16 +673,19 @@ footer ul a:hover{color:var(--gold)}
 
     <div class="journey rv">
       <div class="card">
+        <figure class="jfig"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=70" alt="Circuits imprimés, illustration des débuts de l'IA" loading="lazy"></figure>
         <div class="year">Hier</div>
         <h3>Le rêve des pionniers</h3>
         <p>Dans les années 1950, Turing et les chercheurs de Dartmouth imaginent une machine capable de penser. L'idée semble alors impossible.</p>
       </div>
       <div class="card">
+        <figure class="jfig"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=70" alt="Réseau de neurones artificiels, illustration de l'IA moderne" loading="lazy"></figure>
         <div class="year">Aujourd'hui</div>
         <h3>Une présence quotidienne</h3>
         <p>L'IA générative rédige du texte, crée des images, recommande des vidéos. Elle est dans nos téléphones, nos hôpitaux, nos écoles.</p>
       </div>
       <div class="card">
+        <figure class="jfig"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=70" alt="Réseau mondial, illustration du futur de l'IA" loading="lazy"></figure>
         <div class="year">Demain</div>
         <h3>Des questions ouvertes</h3>
         <p>Viendra-t-on à une IA consciente ? Comment la réguler ? Quel sera son impact sur l'emploi ? Ces questions restent sans réponse.</p>
@@ -676,7 +716,7 @@ footer ul a:hover{color:var(--gold)}
         <div class="chat-hd">
           <span class="dot" aria-hidden="true"></span>
           <b>ISZ AI</b>
-          <small>hors ligne · v1.0</small>
+          <small>hors ligne · v1.1</small>
         </div>
         <div class="quick" role="group" aria-label="Questions rapides">
           <button type="button" data-q="C'est quoi l'IA ?">C'est quoi l'IA ?</button>
@@ -686,7 +726,7 @@ footer ul a:hover{color:var(--gold)}
         <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation"></div>
         <div class="sugg" id="sugg"></div>
         <form class="chat-in" id="chatForm" autocomplete="off">
-          <input type="text" id="chatInput" placeholder="Posez votre question…" aria-label="Votre question">
+          <input type="text" id="chatInput" dir="auto" placeholder="Posez votre question…" aria-label="Votre question">
           <button class="send" type="submit" aria-label="Envoyer">
             <svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg>
           </button>
@@ -712,7 +752,7 @@ footer ul a:hover{color:var(--gold)}
 </section>
 
 <!-- ============================================================
-     ÉQUIPE (rappel en bas)
+     ÉQUIPE
      ============================================================ -->
 <section id="equipe">
   <div class="wrap">
@@ -777,6 +817,9 @@ footer ul a:hover{color:var(--gold)}
       </ul>
     </div>
   </div>
+  <div class="f-thanks">
+    Un grand merci à <b>notre enseignante</b> pour ses conseils et son encadrement tout au long de ce projet.
+  </div>
   <div class="f-bottom">
     <span>© <span id="year">2026</span> Lycée Oukraf Mohamed — Projet ISZ</span>
     <span>Designed &amp; Built by ISZ</span>
@@ -786,146 +829,85 @@ footer ul a:hover{color:var(--gold)}
 <button id="top" aria-label="Retour en haut">
   <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
 </button>
+
+<div id="present" role="dialog" aria-modal="true" aria-label="Mode présentation">
+  <canvas class="ps-bg" aria-hidden="true"></canvas>
+  <div class="ps-stage"></div>
+  <button class="icon-btn ps-x" type="button" aria-label="Fermer la présentation"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div class="ps-bar">
+    <button class="icon-btn ps-pv" type="button" aria-label="Précédent"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <span class="ps-n" aria-live="polite">1 / 10</span>
+    <button class="icon-btn ps-nx" type="button" aria-label="Suivant"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <button class="btn btn-ghost ps-ai" type="button">ISZ AI</button>
+  </div>
+  <div class="ps-prog"><i></i></div>
+</div>
+
 <script>
 /* ============================================================
-   BASE DE CONNAISSANCES — ISZ AI
-   80+ fiches, toutes liées au projet ou au thème de l'IA.
-   Chaque fiche : k = mots-clés (FR + AR), r = réponse.
+   ISZ AI — base de connaissances (80+ fiches FR + AR)
    ============================================================ */
 const KB = [
-
-/* ---------- L'IA : notions de base ---------- */
 {k:["ia","intelligence artificielle","c est quoi l ia","definition","definir","تعريف"], r:"L'intelligence artificielle regroupe les techniques qui permettent à une machine d'accomplir des tâches habituellement réservées à l'humain : comprendre une langue, reconnaître une image, prendre une décision.\n\nÀ retenir : l'IA ne pense pas comme nous, elle calcule à partir d'exemples."},
-
 {k:["algorithme","algo","خوارزمية"], r:"Un algorithme est une suite finie d'instructions qui transforme des données d'entrée en résultat.\n\nTout programme, même très simple, est un algorithme. Ce mot ne contient aucune notion d'« intelligence »."},
-
 {k:["donnee","donnees","big data","corpus","بيانات"], r:"Les données sont la matière première de l'IA.\n\nPlus elles sont nombreuses, variées et de qualité, meilleur est l'apprentissage. Des données biaisées donnent un modèle biaisé."},
-
 {k:["machine learning","apprentissage automatique","ml","تعلم الالة"], r:"Le machine learning est l'approche où la machine apprend à partir d'exemples au lieu de suivre des règles écrites à la main.\n\nTrois familles : supervisé (exemples étiquetés), non supervisé (recherche de regroupements), renforcement (récompense ou pénalité)."},
-
 {k:["deep learning","apprentissage profond","profond","تعلم عميق"], r:"Le deep learning est un machine learning qui utilise des réseaux de neurones à nombreuses couches.\n\nChaque couche extrait des caractéristiques de plus en plus abstraites : contours, formes, puis objets entiers pour une image."},
-
 {k:["reseau de neurones","neurone","neurones","perceptron","شبكة عصبية"], r:"Un réseau de neurones artificiel est un assemblage d'unités de calcul reliées entre elles.\n\nChaque connexion a un poids ajusté pendant l'entraînement. Le réseau ne « pense » pas : il minimise une erreur sur des exemples."},
-
 {k:["supervise","supervisee","etiquete"], r:"L'apprentissage supervisé fournit au modèle des exemples déjà étiquetés.\n\nLe modèle apprend à associer une entrée (une image) à une sortie attendue (l'étiquette « chat »). C'est la méthode la plus courante pour classer et prédire."},
-
 {k:["non supervise","non supervisee","clustering","regroupement"], r:"L'apprentissage non supervisé ne reçoit aucune étiquette.\n\nLe modèle cherche seul des structures : regrouper des clients aux habitudes similaires, par exemple."},
-
 {k:["renforcement","recompense","agent","تعزيز"], r:"L'apprentissage par renforcement fonctionne par essais et erreurs.\n\nUn agent agit, reçoit une récompense ou une pénalité, puis ajuste sa stratégie. C'est la méthode d'AlphaGo et de nombreux robots."},
-
 {k:["ia faible","ia forte","faible","forte","ذكاء ضعيف","ذكاء قوي"], r:"L'IA faible est spécialisée dans une tâche : traduction, reconnaissance d'images, jeu d'échecs. C'est le seul type réellement disponible.\n\nL'IA forte, polyvalente et consciente, reste une hypothèse."},
-
 {k:["entrainement","entrainer","parametre","poids"], r:"L'entraînement est la phase où le modèle ajuste ses paramètres internes pour réduire ses erreurs sur les exemples fournis.\n\nPlus il voit de données, plus il s'améliore — mais un modèle trop spécialisé finit par « surapprendre »."},
-
-/* ---------- Histoire ---------- */
 {k:["turing","alan turing","test de turing","تورينغ","تورينج"], r:"Alan Turing (1912-1954) est un mathématicien britannique, pionnier de l'informatique.\n\nEn 1950, il propose un test : si un juge ne peut distinguer une machine d'un humain lors d'un dialogue écrit, on peut la considérer comme « intelligente »."},
-
 {k:["dartmouth","1956","naissance du terme","conference de dartmouth"], r:"La conférence de Dartmouth, à l'été 1956, officialise l'expression « intelligence artificielle ».\n\nJohn McCarthy et Marvin Minsky y réunissent des chercheurs convaincus qu'un programme peut simuler l'intelligence."},
-
 {k:["eliza","1966","chatbot ancien"], r:"ELIZA, créé en 1966, est l'un des premiers programmes de dialogue.\n\nIl imite un psychothérapeute en reformulant les phrases de l'utilisateur. Son succès a montré que l'humain projette facilement de l'intelligence sur une machine."},
-
 {k:["deep blue","kasparov","echecs","1997","شطرنج"], r:"Deep Blue est le superordinateur d'IBM qui bat Garry Kasparov aux échecs en 1997.\n\nIl combine une exploration massive de coups et une fonction d'évaluation écrite par des experts."},
-
 {k:["alexnet","2012","imagenet"], r:"AlexNet, en 2012, fait chuter le taux d'erreur en reconnaissance d'images grâce au deep learning.\n\nCette victoire marque le début de l'essor moderne des réseaux de neurones profonds."},
-
 {k:["alphago","go","2016","sedol"], r:"AlphaGo, développé par DeepMind, bat Lee Sedol au jeu de go en 2016.\n\nIl associe réseaux de neurones et exploration arborescente, ce qui dépasse les méthodes par force brute."},
-
 {k:["2022","ia generative","chatgpt","grand public"], r:"À partir de 2022, les grands modèles de langage rendent l'IA générative accessible au grand public.\n\nDes outils comme ChatGPT rédigent du texte, résument un document ou répondent à des questions en langage naturel."},
-
-/* ---------- Deux formes : UTILE ---------- */
 {k:["ia utile","utile","bienfait","avantage","نافع"], r:"L'IA est utile quand elle aide l'humain sans le remplacer.\n\nExemples : aide au diagnostic médical, exercices adaptés en classe, freinage d'urgence en voiture, optimisation de l'énergie."},
-
 {k:["medecine","sante","diagnostic","hopital","طب","صحة"], r:"En médecine, l'IA aide à détecter des anomalies sur les radios et les scanners, souvent plus vite qu'à l'œil nu.\n\nMais le diagnostic final et la décision restent confiés au médecin. L'IA est un outil d'aide."},
-
 {k:["education","ecole","apprendre","classe","تعليم"], r:"En éducation, l'IA propose des exercices adaptés au niveau de chaque élève et des retours immédiats.\n\nElle ne remplace pas l'enseignant : elle libère du temps pour l'accompagnement."},
-
 {k:["transport","voiture","conduite","securite","نقل"], r:"Dans le transport, l'IA assiste la conduite : maintien de voie, freinage d'urgence, régulation de vitesse.\n\nLa conduite entièrement autonome reste très encadrée."},
-
 {k:["environnement","ecologie","energie","climat"], r:"L'IA peut optimiser la consommation d'énergie et les réseaux électriques.\n\nElle aide aussi à prévoir la météo ou à modéliser le climat — mais son propre coût énergétique reste élevé."},
-
-/* ---------- Deux formes : NUISIBLE ---------- */
 {k:["ia nuisible","nuisible","danger","risque","ضار"], r:"L'IA devient nuisible quand elle est utilisée sans contrôle ni responsabilité.\n\nExemples : deepfakes, fausses informations massives, atteinte à la vie privée, triche scolaire."},
-
 {k:["deepfake","fausse video","truquage","تزييف"], r:"Un deepfake est une image, une vidéo ou une voix truquée par IA.\n\nElle fait dire à une personne ce qu'elle n'a jamais dit. La vérification de la source reste la meilleure protection."},
-
 {k:["fausse information","fake news","desinformation","اخبار مزيفة"], r:"L'IA peut générer massivement de faux articles, de fausses images et de fausses vidéos.\n\nCes contenus se propagent vite et trompent facilement. Recouper l'information avec plusieurs sources fiables est essentiel."},
-
 {k:["vie privee","donnees personnelles","reconnaissance faciale","خصوصية"], r:"La reconnaissance faciale et la collecte de données sans consentement menacent la vie privée.\n\nLe RGPD encadre ces usages en Europe : base légale, droit d'accès, droit de suppression."},
-
 {k:["triche","triche scolaire","devoir ia"], r:"Utiliser l'IA pour rédiger entièrement un devoir, sans réfléchir, est une forme de triche.\n\nL'IA peut aider à comprendre, à reformuler une idée, mais pas à faire le travail à la place de l'élève."},
-
 {k:["emploi","travail","metier","automatisation","وظائف"], r:"L'IA automatise des tâches, rarement des métiers entiers.\n\nLes postes les plus exposés combinent des tâches répétitives et des données numériques. Les compétences de contrôle et de relation humaine prennent de la valeur."},
-
-{k:["energie","empreinte","carbone","ecologie ia"], r:"L'entraînement des grands modèles consomme beaucoup d'électricité et d'eau.\n\nÀ l'inverse, l'IA peut optimiser des réseaux. Le bilan dépend fortement de l'usage."},
-
-/* ---------- Réalité actuelle ---------- */
 {k:["realite","aujourd hui","exemple reel","واقع"], r:"Aujourd'hui, l'IA est déjà partout : recommandations sur YouTube et TikTok, aide au diagnostic dans les hôpitaux, filtrage de CV en entreprise, correction automatique dans les téléphones.\n\nElle est utile ou problématique selon l'usage qu'on en fait."},
-
 {k:["reseaux sociaux","youtube","tiktok","recommandation"], r:"Les réseaux sociaux utilisent l'IA pour choisir les contenus que tu vois.\n\nChaque vidéo regardée est une donnée de plus. L'algorithme prédit ce qui va te retenir le plus longtemps — pas forcément ce qui est vrai ou utile."},
-
 {k:["cv","recrutement","entreprise","filtrage"], r:"Certaines entreprises utilisent l'IA pour filtrer les CV avant même l'entretien.\n\nSi les données d'entraînement sont biaisées, l'IA peut écarter des candidats injustement."},
-
 {k:["telephone","smartphone","photo"], r:"Ton téléphone utilise l'IA sans arrêt : amélioration des photos, correction du texte, reconnaissance vocale, traduction instantanée.\n\nElle est invisible mais bien réelle."},
-
-/* ---------- Bilan : hier / aujourd'hui / demain ---------- */
 {k:["hier","pionniers","debuts","بداية"], r:"Hier, dans les années 1950, Turing et les chercheurs de Dartmouth rêvaient d'une machine pensante.\n\nL'idée semblait impossible, mais elle a lancé 70 ans de recherche."},
-
 {k:["demain","futur","avenir","مستقبل"], r:"Demain, plusieurs questions restent ouvertes :\n\n• Viendra-t-on à une IA consciente ?\n• Comment la réguler sans freiner la recherche ?\n• Quel sera son impact sur l'emploi et l'éducation ?"},
-
-/* ---------- Limites & éthique ---------- */
 {k:["hallucination","invente","faux","erreur","هلوسة"], r:"Une hallucination est une réponse fausse énoncée avec assurance par un modèle génératif.\n\nIl prédit la suite la plus probable, il ne vérifie pas les faits. Toujours recouper une information importante."},
-
 {k:["biais","discrimination","biais algorithmique","تحيز"], r:"Un biais algorithmique est une déformation systématique du résultat, souvent héritée des données d'entraînement.\n\nSi les données sous-représentent un groupe, le modèle produit des résultats moins fiables pour ce groupe."},
-
 {k:["boite noire","explicabilite","transparence"], r:"Une « boîte noire » est un système dont on observe les entrées et les sorties sans pouvoir expliquer la décision interne.\n\nCe manque de transparence complique la responsabilité en cas d'erreur."},
-
 {k:["ethique","morale","responsabilite","أخلاق"], r:"Les questions éthiques portent sur trois axes : biais des données, protection des données personnelles, responsabilité en cas d'erreur.\n\nUn principe utile : l'humain reste décideur, la machine reste un outil."},
-
 {k:["rgpd","cnil","protection des donnees"], r:"Le RGPD est le règlement européen sur la protection des données personnelles, en vigueur depuis 2018.\n\nIl impose une base légale pour collecter des données, un droit d'accès et de suppression, et une information claire des personnes."},
-
 {k:["prompt","consigne","formuler"], r:"Un prompt est la consigne donnée à un modèle génératif.\n\nUn bon prompt précise le rôle attendu, le contexte, le format de sortie et les contraintes. Plus la demande est explicite, plus la réponse est utile."},
-
 {k:["llm","grand modele de langage","gpt"], r:"Un grand modèle de langage (LLM) est entraîné sur d'immenses corpus pour prédire le mot suivant.\n\nIl génère du texte cohérent sans comprendre le monde. C'est pourquoi il peut affirmer des choses fausses avec assurance."},
-
-/* ---------- IA symbolique / connexionniste ---------- */
 {k:["symbolique","systeme expert","regles"], r:"L'IA symbolique repose sur des règles écrites par des humains (« si… alors… »).\n\nExplicable et prévisible, mais rigide face à l'imprévu. Les systèmes experts médicaux en sont un exemple."},
-
 {k:["connexionniste","reseau","apprentissage par exemples"], r:"L'IA connexionniste repose sur des réseaux de neurones qui ajustent leurs paramètres à partir d'exemples.\n\nPuissante sur des tâches complexes (vision, langage) mais difficile à expliquer : on parle de « boîte noire »."},
-
-/* ---------- Le projet & l'équipe ---------- */
 {k:["isz","equipe","qui a cree","createur","فريق","من صنع"], r:"ISZ est l'équipe du projet : Gharbi Mohamed (créateur), Guenidi Djamal (idées), Sid Rayan (relecture) et Mustapha Sebaa (explications).\n\nLe projet est un site réalisé par quatre élèves de 1AS du Lycée Oukraf Mohamed."},
-
 {k:["gharbi","gharbi mohamed","غربي محمد"], r:"Gharbi Mohamed est le créateur et porteur du projet.\n\nIl a défini l'objectif, conçu et codé le site, et coordonné l'équipe."},
-
 {k:["guenidi","djamal","قنيدي جمال"], r:"Guenidi Djamal est l'assistant dans les idées.\n\nIl a proposé des contenus, des exemples et des fonctionnalités pour le site."},
-
 {k:["sid rayan","rayan","سيد ريان"], r:"Sid Rayan est le lecteur / relecteur du projet.\n\nIl relit chaque texte pour corriger les erreurs et simplifier le langage."},
-
 {k:["sebaa","mustapha","مصطفى سباع"], r:"Mustapha Sebaa est l'assistant dans l'explication.\n\nIl aide à présenter et expliquer le projet de façon claire à la classe."},
-
 {k:["lycee","oukraf","ouakraf","ثانوية","اوكراف"], r:"Le Lycée Oukraf Mohamed est l'établissement où le projet a été réalisé.\n\nCe site a été conçu comme un exposé numérique, dans le cadre du programme de 1AS."},
-
 {k:["projet","ce site","expose","مشروع"], r:"Ce projet est un exposé numérique sur l'intelligence artificielle.\n\nIl présente une définition, l'histoire de l'idée, les deux formes de l'IA (utile et nuisible), la réalité actuelle, et un bilan hier / aujourd'hui / demain."},
-
 {k:["objectif","but du projet","pourquoi"], r:"L'objectif du projet est triple : expliquer simplement ce qu'est l'IA, montrer qu'elle peut être utile ou nuisible, et faire réfléchir sur son usage actuel.\n\nIl ne s'agit pas de vanter l'IA, ni de la diaboliser."},
-
-/* ---------- Conversation ---------- */
 {k:["aide","help","comment utiliser","comment ca marche","مساعدة"], r:"Écrivez une question en français ou en arabe puis validez. Vous pouvez aussi cliquer sur les trois boutons rapides en haut du chat.\n\nLe bouton « Vider l'historique » efface la conversation sur cet appareil."},
-
 {k:["que sais tu","que sais-tu","tes sujets","ماذا تعرف"], r:"Je connais plusieurs domaines : 1) la définition de l'IA, 2) son histoire (Turing, Dartmouth, Deep Blue, AlphaGo), 3) les deux formes (utile et nuisible), 4) la réalité actuelle, 5) le bilan hier / aujourd'hui / demain, 6) le projet et l'équipe ISZ.\n\nEssayez par exemple : « Qu'est-ce qu'un biais ? » ou « Donne un exemple d'IA utile »."},
-
 {k:["qui es tu","ton nom","tu es qui","من انت","ما اسمك"], r:"Je suis ISZ AI, un assistant local intégré à ce projet.\n\nJe fonctionne sans connexion : je compare votre question à des fiches internes et renvoie la plus proche. Je peux me tromper, vérifiez les points importants dans le site."},
-
 {k:["conscience","sentiments","tu penses","مشاعر"], r:"Je suis un programme : je n'ai ni conscience ni émotions.\n\nJe compare votre question à une base de fiches et je renvoie la réponse la plus proche. Je ne comprends pas le sens comme un humain."},
-
 {k:["conseil","reviser","methode","apprendre","نصيحة","مراجعة"], r:"Trois conseils pour préparer un exposé sur l'IA :\n\n1. Retenez la chronologie : 1950 Turing, 1956 Dartmouth, 1997 Deep Blue, 2012 deep learning, 2022 IA générative.\n2. Sachez citer un exemple d'IA utile (santé) et un exemple d'IA nuisible (deepfakes).\n3. Expliquez en une phrase pourquoi l'IA est difficile à développer."},
-
-/* ---------- Salutations ---------- */
 {k:["bonjour","salut","salam","مرحبا","السلام"], r:"Bonjour ! Je peux expliquer une notion, détailler une date clé, citer un exemple d'IA utile ou nuisible.\n\nQue voulez-vous savoir ?"},
 {k:["merci","thanks","chokran","شكرا"], r:"Avec plaisir. Si vous voulez creuser, essayez « Donne un exemple d'IA utile » ou « Qu'est-ce qu'un deepfake ? »."},
 {k:["au revoir","bye","باي","الى اللقاء"], r:"À bientôt ! Le site fonctionne hors ligne, vous pouvez revenir à tout moment."},
-
-/* ---------- Arabe ---------- */
 {k:["ما هو الذكاء الاصطناعي","الذكاء الاصطناعي","تعريف الذكاء"], r:"الذكاء الاصطناعي هو مجموعة التقنيات التي تسمح للآلة بأداء مهام ذهنية مثل الإدراك والاستدلال والتعلّم.\n\nكل الأنظمة الحالية «ضعيفة»، أي متخصصة في مجال محدد."},
 {k:["من هو تورينغ","تورينغ","تورينج"], r:"آلان تورينغ عالم رياضيات بريطاني، رائد في علم الحاسوب.\n\nفي 1950 اقترح اختبارًا: إذا لم يستطع الحكم التمييز بين آلة وإنسان في حوار مكتوب، يمكن اعتبار الآلة «ذكية»."},
 {k:["تعلم الالة","تعلم الآلة"], r:"تعلّم الآلة هو الأسلوب الذي تتعلم فيه الآلة من الأمثلة بدل تلقينها قواعد مكتوبة يدويًا.\n\nثلاث عائلات: المراقب، وغير المراقب، وبالتعزيز."},
@@ -933,16 +915,15 @@ const KB = [
 {k:["نصائح للمراجعة","المراجعة","مراجعة"], r:"ثلاث نصائح للمراجعة:\n\n1. احفظ التواريخ الأساسية: 1950، 1956، 1997، 2012، 2022.\n2. ميّز بين الذكاء النافع والضار.\n3. اشرح في جملة واحدة لماذا الذكاء الاصطناعي صعب التطوير."}
 ];
 </script>
-<script>
+
+<!-- (الجزء 2/2 يكمل من هنا) -->
+   <script>
 /* ============================================================
    UTILITAIRES
    ============================================================ */
 const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-
-function esc(s){
-  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
+const safe = f => { try{ return f(); }catch(e){ console.error(e); } };
 
 /* ============================================================
    MOTEUR ISZ AI
@@ -955,9 +936,7 @@ function norm(s){
     .replace(/\s+/g, " ").trim();
 }
 const STOP = new Set(["le","la","les","un","une","des","de","du","au","aux","et","ou","a","en","dans","pour","sur","que","qui","quoi","est","ce","c","il","elle","on","nous","vous","je","tu","se","sa","son","ses","mon","ma","mes","the","of","to","is","what","comment","pourquoi","quand","quel","quelle","s","d","l","j","y","في","من","على","هو","هي","ما","هل"]);
-function words(s){
-  return norm(s).split(" ").filter(w => w.length > 1 && !STOP.has(w));
-}
+function words(s){ return norm(s).split(" ").filter(w => w.length > 1 && !STOP.has(w)); }
 function lev(a, b){
   if(a === b) return 0;
   if(!a.length) return b.length;
@@ -979,9 +958,8 @@ function score(question, entry){
   let best = 0;
   entry.k.forEach(key => {
     const kn = norm(key);
-    if(qn.includes(kn)) best = Math.max(best, 4 + kn.length / 12);
-    const kw = words(key);
-    kw.forEach(kwWord => {
+    if(kn.length > 3 ? qn.includes(kn) : (" " + qn + " ").includes(" " + kn + " ")) best = Math.max(best, 4 + kn.length / 12);
+    words(key).forEach(kwWord => {
       q.forEach(qWord => {
         if(qWord === kwWord) best = Math.max(best, 3);
         else if(kwWord.length > 4 && lev(qWord, kwWord) <= 1) best = Math.max(best, 2);
@@ -1008,9 +986,7 @@ function answer(question){
    ============================================================ */
 let io = null;
 function observeAll(){
-  if(!("IntersectionObserver" in window)){
-    $$(".rv").forEach(el => el.classList.add("in")); return;
-  }
+  if(!("IntersectionObserver" in window)){ $$(".rv").forEach(el => el.classList.add("in")); return; }
   if(!io){
     io = new IntersectionObserver(entries => {
       entries.forEach(en => {
@@ -1030,7 +1006,7 @@ function revealFallback(){
 }
 
 /* ============================================================
-   MACHINE À ÉCRIRE (HERO)
+   MACHINE À ÉCRIRE
    ============================================================ */
 function initTyped(){
   const el = $("#typed"); if(!el) return;
@@ -1044,9 +1020,9 @@ function initTyped(){
   let i = 0, j = 0, del = false;
   const tick = () => {
     const p = phrases[i];
-    el.textContent = del ? p.slice(0, j--) : p.slice(0, j++);
+    el.textContent = p.slice(0, Math.max(j, 0)); j += del ? -1 : 1;
     let wait = del ? 28 : 48;
-    if(!del && j > p.length){ del = true; wait = 1700; }
+    if(!del && j > p.length){ del = true; j = p.length; wait = 1700; }
     else if(del && j < 0){ del = false; j = 0; i = (i + 1) % phrases.length; wait = 320; }
     setTimeout(tick, wait);
   };
@@ -1054,11 +1030,11 @@ function initTyped(){
 }
 
 /* ============================================================
-   PARTICULES DU HERO
+   PARTICULES
    ============================================================ */
 function initParticles(){
   const cv = $("#heroCanvas"); if(!cv) return;
-  const ctx = cv.getContext("2d");
+  const ctx = cv.getContext("2d"); if(!ctx) return;
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let w = 0, h = 0, dpr = 1, pts = [], raf = null;
   const size = () => {
@@ -1080,14 +1056,12 @@ function initParticles(){
     const line = light ? "rgba(201,169,97," : "rgba(232,212,160,";
     pts.forEach((p, i) => {
       p.x += p.vx; p.y += p.vy;
-      if(p.x < 0 || p.x > w) p.vx *= -1;
-      if(p.y < 0 || p.y > h) p.vy *= -1;
+      if(p.x < 0){ p.x = 0; p.vx = Math.abs(p.vx); } else if(p.x > w){ p.x = w; p.vx = -Math.abs(p.vx); }
+      if(p.y < 0){ p.y = 0; p.vy = Math.abs(p.vy); } else if(p.y > h){ p.y = h; p.vy = -Math.abs(p.vy); }
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = dot; ctx.fill();
       for(let k = i + 1; k < pts.length; k++){
-        const q = pts[k];
-        const dx = p.x - q.x, dy = p.y - q.y;
-        const d = Math.hypot(dx, dy);
+        const q = pts[k], dx = p.x - q.x, dy = p.y - q.y, d = Math.hypot(dx, dy);
         if(d < 130){
           ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
           ctx.strokeStyle = line + (0.18 * (1 - d / 130)).toFixed(3) + ")";
@@ -1099,14 +1073,11 @@ function initParticles(){
   };
   size();
   if(reduce){
-    pts.forEach(p => {
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(201,169,97,.55)"; ctx.fill();
-    });
+    pts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = "rgba(201,169,97,.55)"; ctx.fill(); });
     return;
   }
   draw();
-  window.addEventListener("resize", size, {passive: true});
+  let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if(cv.clientWidth !== w) size(); }, 150); }, {passive: true});
   if("IntersectionObserver" in window){
     new IntersectionObserver(es => {
       es.forEach(e => {
@@ -1118,13 +1089,12 @@ function initParticles(){
 }
 
 /* ============================================================
-   RIPPLE SUR BOUTONS
+   RIPPLE
    ============================================================ */
 function initRipple(){
   document.addEventListener("click", e => {
     const b = e.target.closest(".btn"); if(!b) return;
-    const r = b.getBoundingClientRect();
-    const size = Math.max(r.width, r.height);
+    const r = b.getBoundingClientRect(), size = Math.max(r.width, r.height);
     const s = document.createElement("span");
     s.className = "rip";
     s.style.width = s.style.height = size + "px";
@@ -1136,11 +1106,11 @@ function initRipple(){
 }
 
 /* ============================================================
-   THÈME CLAIR / SOMBRE
+   THÈME
    ============================================================ */
 function initTheme(){
   const html = document.documentElement;
-  const saved = localStorage.getItem("isz-theme");
+  let saved = null; try{ saved = localStorage.getItem("isz-theme"); }catch(e){}
   if(saved === "light" || saved === "dark") html.dataset.theme = saved;
   const icon = $("#tIcon");
   const paint = () => {
@@ -1155,7 +1125,7 @@ function initTheme(){
   paint();
   $("#tBtn").addEventListener("click", () => {
     html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
-    localStorage.setItem("isz-theme", html.dataset.theme);
+    try{ localStorage.setItem("isz-theme", html.dataset.theme); }catch(e){}
     paint();
   });
 }
@@ -1183,7 +1153,7 @@ function initNav(){
     sections.forEach(s => o.observe(s));
   }
   const top = $("#top");
-  top.addEventListener("click", () => window.scrollTo({top: 0, behavior: "smooth"}));
+  top.addEventListener("click", () => window.iszScroll(0));
   window.addEventListener("scroll", () => {
     top.classList.toggle("show", window.scrollY > 600);
   }, {passive: true});
@@ -1191,29 +1161,26 @@ function initNav(){
 }
 
 /* ============================================================
-   CHAT ISZ AI
+   CHAT
    ============================================================ */
 function initChat(){
   const log = $("#log"), form = $("#chatForm"), input = $("#chatInput"), sugg = $("#sugg");
   const KEY = "isz-chat-history";
   let history = [];
-
   const addMsg = (who, text, save = true) => {
     const d = document.createElement("div");
     d.className = "msg " + (who === "me" ? "me" : "bot");
-    d.textContent = text;
+    d.textContent = text; d.dir = "auto";
     if(who === "bot"){
       const meta = document.createElement("span");
-      meta.className = "meta"; meta.textContent = "ISZ AI — réponse locale";
+      meta.className = "meta"; meta.dir = "ltr"; meta.textContent = "ISZ AI — réponse locale";
       d.appendChild(meta);
     }
     log.appendChild(d);
     log.scrollTop = log.scrollHeight;
     if(save){ history.push({who, text}); persist(); }
   };
-  const persist = () => {
-    try{ localStorage.setItem(KEY, JSON.stringify(history.slice(-40))); }catch(e){}
-  };
+  const persist = () => { try{ localStorage.setItem(KEY, JSON.stringify(history.slice(-40))); }catch(e){} };
   const suggestions = ["C'est quoi l'IA ?", "Qu'est-ce qu'un deepfake ?", "Donne un exemple d'IA utile"];
   const paintSugg = () => {
     sugg.innerHTML = "";
@@ -1233,10 +1200,14 @@ function initChat(){
     bubble.className = "msg bot typing"; bubble.textContent = "ISZ AI réfléchit";
     log.appendChild(bubble); log.scrollTop = log.scrollHeight;
     setTimeout(() => {
-      const res = answer(text);
-      bubble.remove();
-      addMsg("bot", res.text);
-      busy = false;
+      try{
+        const res = answer(text);
+        bubble.remove();
+        addMsg("bot", res.text);
+      }catch(e){
+        bubble.remove();
+        addMsg("bot", "Une erreur est survenue. Réessayez.", false);
+      }finally{ busy = false; }
     }, 420);
   };
   form.addEventListener("submit", e => { e.preventDefault(); send(input.value); });
@@ -1247,14 +1218,13 @@ function initChat(){
     log.innerHTML = "";
     addMsg("bot", "Historique effacé. Posez une nouvelle question quand vous voulez.", false);
   });
-
   let restored = [];
   try{ restored = JSON.parse(localStorage.getItem(KEY) || "[]"); }catch(e){ restored = []; }
   if(Array.isArray(restored) && restored.length){
     restored.forEach(m => {
       const d = document.createElement("div");
       d.className = "msg " + (m.who === "me" ? "me" : "bot");
-      d.textContent = m.text;
+      d.textContent = m.text; d.dir = "auto";
       log.appendChild(d);
     });
     history = restored;
@@ -1265,13 +1235,27 @@ function initChat(){
 }
 
 /* ============================================================
-   FALLBACK IMAGES
+   FALLBACK IMAGES (SVG généré)
    ============================================================ */
-function initImageFallback(){
-  $$("img").forEach(img => {
+function artURI(seed){
+  let a = seed * 9301 + 49297;
+  const r = () => (a = (a * 9301 + 49297) % 233280) / 233280;
+  const P = Array.from({length: 30}, () => [r() * 800, r() * 500, r() * 3 + 1.5]);
+  let g = "";
+  P.forEach((p, i) => P.slice(i + 1).forEach(q => {
+    const d = Math.hypot(p[0] - q[0], p[1] - q[1]);
+    if(d < 150) g += `<line x1="${p[0]|0}" y1="${p[1]|0}" x2="${q[0]|0}" y2="${q[1]|0}" stroke="#C9A961" stroke-opacity="${(.5 * (1 - d / 150)).toFixed(2)}"/>`;
+  }));
+  P.forEach(p => { g += `<circle cx="${p[0]|0}" cy="${p[1]|0}" r="${p[2].toFixed(1)}" fill="#E8D4A0"/>`; });
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><defs><radialGradient id="g" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#2A2416"/><stop offset="1" stop-color="#0A0A0A"/></radialGradient></defs><rect width="800" height="500" fill="url(#g)"/>${g}</svg>`;
+  return "data:image/svg+xml," + encodeURIComponent(svg);
+}
+function initImageFallback(root = document){
+  $$("img", root).forEach(img => {
     const fail = () => {
-      const f = img.closest("figure");
-      if(f) f.classList.add("failed");
+      if(img.dataset.fb) return;
+      img.dataset.fb = "1";
+      img.src = artURI(Math.abs([...(img.alt || "x")].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7)));
     };
     img.addEventListener("error", fail);
     if(img.complete && !img.naturalWidth) fail();
@@ -1279,18 +1263,257 @@ function initImageFallback(){
 }
 
 /* ============================================================
+   MOTION (GSAP + Lenis) — sans dépendance si CDN absent
+   ============================================================ */
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let lenis = null;
+window.iszScroll = (t, o) => {
+  if(lenis) return lenis.scrollTo(t, o);
+  if(typeof t === "number") window.scrollTo({top: t, behavior: RM ? "auto" : "smooth"});
+  else t.scrollIntoView({behavior: RM ? "auto" : "smooth"});
+};
+function countUp(el){
+  const to = +el.dataset.to;
+  if(!window.gsap || RM){ el.textContent = to; return; }
+  const o = {v: +(el.dataset.from || 0)};
+  el.textContent = o.v;
+  gsap.to(o, {v: to, duration: 1.8, ease: "power2.out", onUpdate: () => { el.textContent = Math.round(o.v); }});
+}
+function blurWords(el){
+  const frag = document.createDocumentFragment(), spans = [];
+  const walk = (node, parent) => node.childNodes.forEach(n => {
+    if(n.nodeType === 3){
+      n.textContent.split(/(\s+)/).forEach(tk => {
+        if(!tk) return;
+        if(/^\s+$/.test(tk)) parent.appendChild(document.createTextNode(" "));
+        else{ const s = document.createElement("span"); s.className = "bw"; s.textContent = tk; parent.appendChild(s); spans.push(s); }
+      });
+    }else if(n.nodeType === 1){ const c = n.cloneNode(false); parent.appendChild(c); walk(n, c); }
+  });
+  walk(el, frag); el.textContent = ""; el.appendChild(frag);
+  return spans;
+}
+function initMotion(){
+  const on = !!(window.gsap && window.ScrollTrigger) && !RM;
+  if(on){
+    gsap.registerPlugin(ScrollTrigger);
+    if(window.Lenis){
+      lenis = new Lenis({duration: 1.15, smoothWheel: true});
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(t => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+    document.documentElement.classList.add("gsap");
+    const words = blurWords($(".hero h1"));
+    gsap.timeline({defaults: {ease: "power3.out"}})
+      .from(".logo-hero", {opacity: 0, filter: "blur(12px)", duration: .9, clearProps: "filter,opacity"})
+      .from(".lycee", {opacity: 0, y: 14, duration: .7, clearProps: "opacity,transform"}, "-=.5")
+      .from(words, {opacity: 0, y: -24, filter: "blur(10px)", duration: .9, stagger: .12, clearProps: "filter,opacity,transform"}, "-=.4")
+      .from([".typed-line", ".authors .author", ".cta > *"], {opacity: 0, y: 18, duration: .7, stagger: .08, clearProps: "opacity,transform"}, "-=.5");
+    $$(".rv").forEach(el => {
+      const kids = el.matches(".grid,.grid-2,.reality,.journey,.forms,.ai") ? Array.from(el.children) : null;
+      if(kids) el.classList.add("in");
+      gsap.fromTo(kids || el, {autoAlpha: 0, y: 30}, {
+        autoAlpha: 1, y: 0, duration: .9, ease: "power3.out", stagger: kids ? .12 : 0,
+        clearProps: "opacity,visibility,transform",
+        onComplete(){ el.classList.add("in"); this.targets().forEach(t => t.style.transition = ""); },
+        scrollTrigger: {trigger: el, start: "top 86%", once: true}
+      });
+    });
+    $$(".cnt").forEach(el => {
+      el.textContent = el.dataset.from || 0;
+      ScrollTrigger.create({trigger: el, start: "top 92%", once: true, onEnter: () => countUp(el)});
+    });
+    const sp = document.createElement("div"); sp.className = "sp"; document.body.appendChild(sp);
+    gsap.to(sp, {scaleX: 1, ease: "none", scrollTrigger: {start: 0, end: "max", scrub: .3}});
+    gsap.from(".journey .year", {scale: .6, opacity: 0, duration: .8, ease: "back.out(1.6)", stagger: .15, scrollTrigger: {trigger: ".journey", start: "top 80%", once: true}});
+    document.addEventListener("pointermove", e => {
+      const c = e.target.closest(".card,.real-card"); if(!c) return;
+      const r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      c.style.setProperty("--my", (e.clientY - r.top) + "px");
+    }, {passive: true});
+    const sb = $(".star-border");
+    if(sb){
+      sb.addEventListener("pointermove", e => { const r = sb.getBoundingClientRect(); gsap.to(sb, {x: (e.clientX - r.left - r.width / 2) * .15, y: (e.clientY - r.top - r.height / 2) * .25, duration: .3}); });
+      sb.addEventListener("pointerleave", () => gsap.to(sb, {x: 0, y: 0, duration: .5, ease: "power3.out"}));
+    }
+    addEventListener("load", () => ScrollTrigger.refresh());
+  }
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#"]'); if(!a) return;
+    const id = a.getAttribute("href"), t = id.length > 1 && document.querySelector(id); if(!t) return;
+    e.preventDefault();
+    iszScroll(t, {offset: -(parseInt(getComputedStyle(document.documentElement).getPropertyValue("--head")) || 0)});
+    history.replaceState(null, "", id);
+  });
+  addEventListener("keydown", e => {
+    const n = $("#nav");
+    if(e.key === "Escape" && n.classList.contains("open")){ n.classList.remove("open"); $("#burger").setAttribute("aria-expanded", "false"); }
+  });
+  return on;
+}
+
+/* ============================================================
+   RAYONS (shader WebGL léger, or)
+   ============================================================ */
+function lightRays(cv){
+  const gl = cv.getContext("webgl", {premultipliedAlpha: true, alpha: true, antialias: false});
+  if(!gl){ cv.remove(); return null; }
+  const sh = (t, src) => { const x = gl.createShader(t); gl.shaderSource(x, src); gl.compileShader(x); return x; };
+  const pr = gl.createProgram();
+  gl.attachShader(pr, sh(gl.VERTEX_SHADER, "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}"));
+  gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, `precision mediump float;uniform vec2 R;uniform float T,I;uniform vec3 C;
+float ray(vec2 o,vec2 c,float a,float b,float s){vec2 d=c-o;float l=length(d);float ca=dot(d/l,vec2(0.,1.));
+float sp=pow(max(ca,0.),2.2);float f=clamp(1.-l/(R.x*1.1),0.,1.);
+float w=clamp(.45+.15*sin(ca*a+T*s)+.3+.2*cos(-ca*b+T*s),0.,1.);return w*f*sp;}
+void main(){vec2 c=vec2(gl_FragCoord.x,R.y-gl_FragCoord.y);vec2 o=vec2(R.x*.5,-R.y*.15);
+float v=(ray(o,c,36.2,21.1,.6)*.5+ray(o,c,22.4,18.,.44)*.4)*I;gl_FragColor=vec4(C*v,v);}`));
+  gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr, gl.LINK_STATUS)){ cv.remove(); return null; }
+  gl.useProgram(pr);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const uR = gl.getUniformLocation(pr, "R"), uT = gl.getUniformLocation(pr, "T"), uI = gl.getUniformLocation(pr, "I"), uC = gl.getUniformLocation(pr, "C");
+  const t0 = performance.now(); let raf = 0;
+  const size = () => { cv.width = Math.max(2, cv.clientWidth * .6 | 0); cv.height = Math.max(2, cv.clientHeight * .6 | 0); gl.viewport(0, 0, cv.width, cv.height); };
+  const draw = n => {
+    const dark = document.documentElement.dataset.theme === "dark";
+    gl.uniform2f(uR, cv.width, cv.height); gl.uniform1f(uT, (n - t0) / 1000); gl.uniform1f(uI, dark ? 1 : .8);
+    if(dark) gl.uniform3f(uC, .91, .83, .63); else gl.uniform3f(uC, .79, .66, .38);
+    gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLES, 0, 3);
+  };
+  const still = () => draw(t0 + 2000);
+  const loop = n => { draw(n); raf = requestAnimationFrame(loop); };
+  const play = () => { size(); if(RM) still(); else if(!raf) raf = requestAnimationFrame(loop); };
+  const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+  size(); still();
+  if(!RM) new IntersectionObserver(e => e[0].isIntersecting ? play() : stop()).observe(cv);
+  addEventListener("resize", () => { size(); if(!raf) still(); }, {passive: true});
+  new MutationObserver(() => { if(!raf) still(); }).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
+  return {play, stop};
+}
+
+/* ============================================================
+   MODE PRÉSENTATION
+   ============================================================ */
+function initPresent(){
+  const root = $("#present"); if(!root) return;
+  const stage = $(".ps-stage", root), num = $(".ps-n", root), prog = $(".ps-prog i", root);
+  let S = [], cur = 0, opener = null, rays = null, aiIdx = 0, inp = null;
+  const strip = h => h.replace(/\brv\b/g, "").replace(/ loading="lazy"/g, "");
+  const cl = sel => { const e = $(sel); return e ? strip(e.outerHTML) : ""; };
+  const build = () => {
+    const d = $$("#definition .wrap > *").map(e => strip(e.outerHTML));
+    const ttl = id => `<h2 class="ps-t">${$(id + " h2").textContent}</h2>`;
+    const sl = [
+      `<div class="ps-s ps-c"><div class="ps-logo">${cl(".logo-hero")}</div>${cl(".lycee")}<h2 class="ps-t">L'Intelligence <em>Artificielle</em></h2>${cl(".authors")}</div>`,
+      `<div class="ps-s"><h2 class="ps-t">Introduction</h2><p class="mut">L'objectif du projet est triple.</p><div class="grid"><article class="card"><h3>1. Expliquer simplement ce qu'est l'IA</h3><span class="tag">Notion clé</span></article><article class="card"><h3>2. Montrer qu'elle peut être utile ou nuisible</h3><span class="tag">Deux formes</span></article><article class="card"><h3>3. Faire réfléchir sur son usage actuel</h3><span class="tag">Réalité</span></article></div><p class="synth">Il ne s'agit pas de vanter l'IA, ni de la diaboliser.</p></div>`,
+      `<div class="ps-s">${ttl("#definition")}${d[2] || ""}</div>`,
+      `<div class="ps-s">${d[3] || ""}${d[4] || ""}${d[5] || ""}</div>`,
+      `<div class="ps-s">${d[6] || ""}${d[7] || ""}${d[8] || ""}</div>`,
+      `<div class="ps-s">${ttl("#formes")}${cl("#formes .forms")}</div>`,
+      `<div class="ps-s">${ttl("#realite")}${cl("#realite .reality")}</div>`,
+      `<div class="ps-s">${ttl("#bilan")}${cl("#bilan .journey")}${cl("#bilan .synth")}</div>`,
+      `<div class="ps-s">${ttl("#iszai")}<div class="chat ps-chat">${cl("#iszai .quick")}<div class="log" role="log" aria-live="polite" aria-label="Conversation"></div><form class="chat-in ps-form" autocomplete="off"><input type="text" dir="auto" placeholder="Posez votre question…" aria-label="Votre question"><button class="send" type="submit" aria-label="Envoyer"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg></button></form></div></div>`,
+      `<div class="ps-s ps-c"><div class="ps-logo">${cl(".logo-hero")}</div><h2 class="ps-t">Merci !</h2><p class="mut">Projet créé par</p><div class="authors ps-gmw">${$$(".authors .author")[0].outerHTML}</div><p class="mut">Avec leurs amis</p><div class="authors">${$$(".authors .author").slice(1).map(e => e.outerHTML).join("")}</div><p class="synth">Merci pour votre écoute et votre participation.</p></div>`
+    ];
+    aiIdx = sl.length - 2;
+    stage.innerHTML = sl.map((h, i) => `<div class="ps-sl" style="--art:url('${artURI(i + 3)}')">${h}</div>`).join("");
+    S = $$(".ps-sl", stage);
+    $$(".ps-t", stage).forEach(blurWords);
+    initImageFallback(stage);
+    const log = $(".ps-chat .log", stage), form = $(".ps-form", stage); inp = $("input", form);
+    const add = (cls, t) => { const m = document.createElement("div"); m.className = "msg " + cls; m.textContent = t; m.dir = "auto"; log.appendChild(m); log.scrollTop = log.scrollHeight; return m; };
+    let busy = false;
+    const ask = q => {
+      q = String(q || "").trim(); if(!q || busy) return;
+      busy = true; add("me", q); inp.value = "";
+      const b = add("bot typing", "ISZ AI réfléchit");
+      setTimeout(() => { b.remove(); try{ add("bot", answer(q).text); }catch(e){ add("bot", "Une erreur est survenue. Réessayez."); } busy = false; }, 380);
+    };
+    add("bot", "Bonjour ! Je suis ISZ AI, l'assistant de ce projet.\n\nPosez-moi une question sur l'intelligence artificielle.");
+    $$(".quick button", stage).forEach(b => b.addEventListener("click", () => ask(b.dataset.q)));
+    form.addEventListener("submit", e => { e.preventDefault(); ask(inp.value); });
+  };
+  const tg = s => {
+    const out = [];
+    Array.from(s.firstElementChild.children).forEach(c => {
+      if(c.classList.contains("ps-t")) out.push(...$$(".bw", c));
+      else if(c.matches(".grid,.grid-2,.forms,.reality,.journey,.authors")) out.push(...c.children);
+      else out.push(c);
+    });
+    return out;
+  };
+  const go = n => {
+    n = Math.max(0, Math.min(S.length - 1, n));
+    const prev = S[cur], next = S[n], dir = n >= cur ? 1 : -1;
+    cur = n; num.textContent = (n + 1) + " / " + S.length; prog.style.width = ((n + 1) / S.length * 100) + "%";
+    const show = () => {
+      S.forEach(s => s.classList.toggle("on", s === next));
+      $$(".cnt", next).forEach(countUp);
+      if(window.gsap && !RM) gsap.fromTo(tg(next), {autoAlpha: 0, y: 34, x: 28 * dir, filter: "blur(8px)"}, {autoAlpha: 1, y: 0, x: 0, filter: "blur(0px)", duration: .85, ease: "power3.out", stagger: .09, delay: .05, clearProps: "filter,transform"});
+    };
+    if(window.gsap && !RM && prev !== next){ gsap.killTweensOf(S); gsap.to(prev, {opacity: 0, duration: .3, onComplete: show}); }
+    else show();
+  };
+  const lock = v => ["header", "main", "footer"].forEach(t => { const e = $(t); if(e) e.inert = v; });
+  const open = from => {
+    if(!S.length) build();
+    opener = from; root.classList.add("open"); document.body.style.overflow = "hidden"; lock(true);
+    if(lenis) lenis.stop();
+    if(!rays) rays = safe(() => lightRays($(".ps-bg", root)));
+    if(rays) rays.play();
+    cur = 0; S.forEach(s => s.classList.remove("on")); go(0);
+    if(window.gsap && !RM) gsap.fromTo(root, {opacity: 0}, {opacity: 1, duration: .5});
+    $(".ps-x", root).focus();
+  };
+  const close = () => {
+    root.classList.remove("open"); document.body.style.overflow = ""; lock(false);
+    if(lenis) lenis.start();
+    if(rays) rays.stop();
+    if(opener && opener.focus) opener.focus();
+  };
+  $$("[data-present]").forEach(b => b.addEventListener("click", () => open(b)));
+  $(".ps-x", root).addEventListener("click", close);
+  $(".ps-nx", root).addEventListener("click", () => go(cur + 1));
+  $(".ps-pv", root).addEventListener("click", () => go(cur - 1));
+  $(".ps-ai", root).addEventListener("click", () => { if(S.length){ go(S.length - 2); setTimeout(() => inp && inp.focus(), 500); } });
+  document.addEventListener("keydown", e => {
+    if(!root.classList.contains("open")) return;
+    const k = e.key;
+    if(k !== "Escape" && e.target.closest("input,textarea")) return;
+    if(k === "Escape") close();
+    else if(k === "ArrowRight" || k === "PageDown" || (k === " " && !e.target.closest("button"))){ e.preventDefault(); go(cur + 1); }
+    else if(k === "ArrowLeft" || k === "PageUp"){ e.preventDefault(); go(cur - 1); }
+    else if(k === "Home") go(0);
+    else if(k === "End") go(S.length - 1);
+  });
+  let x0 = null;
+  root.addEventListener("touchstart", e => { x0 = e.target.closest(".ps-chat") ? null : e.touches[0].clientX; }, {passive: true});
+  root.addEventListener("touchend", e => {
+    if(x0 == null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if(Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1));
+  }, {passive: true});
+}
+
+/* ============================================================
    INITIALISATION
    ============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
-  initTheme();
-  initNav();
-  initChat();
-  initTyped();
-  initParticles();
-  initRipple();
-  initImageFallback();
-  observeAll();
-  revealFallback();
+  safe(initTheme);
+  safe(initNav);
+  safe(initChat);
+  safe(initTyped);
+  safe(initParticles);
+  safe(initRipple);
+  safe(() => initImageFallback());
+  safe(() => { const c = $("#raysCanvas"); if(c) lightRays(c); });
+  safe(initPresent);
+  const motionOk = safe(initMotion);
+  if(!motionOk){ safe(observeAll); safe(revealFallback); }
 });
 </script>
 </body>
